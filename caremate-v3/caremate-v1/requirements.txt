@@ -1,0 +1,4 @@
+crewai
+langchain-google-genai
+crewai_tools
+pydantic

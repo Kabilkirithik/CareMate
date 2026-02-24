@@ -1,0 +1,112 @@
+# CareMate Task Configurations
+# YAML configuration for tasks (alternative to Python-based config)
+
+patient_analysis_task:
+  description: >
+    Analyze the patient query: {query}
+    
+    Patient Identifiers:
+    - Hospital ID: {hospital_id}
+    - Bed Number: {bed_number}
+    
+    Your Steps:
+    1. Use the Patient Record Retrieval tool to fetch patient information
+    2. Use the Context Summarization tool to extract relevant context for this query
+    3. Use the Intent Classification tool to determine if this is MEDICAL, NON_MEDICAL, or EMERGENCY
+    4. Use the Distress Detection tool to check for distress signals
+    5. Use the Memory Management tool to retrieve recent conversation history
+    
+    Analyze all this information comprehensively and return structured output.
+    
+    IMPORTANT: You are ONLY analyzing and gathering information. You do NOT make
+    decisions about what to do or generate responses. That is the next agent's job.
+    
+  expected_output: >
+    A detailed JSON object with the following structure:
+    {
+      "patient_context": "2-3 sentence summary of relevant patient information",
+      "intent_category": "MEDICAL or NON_MEDICAL or EMERGENCY",
+      "urgency_level": "LOW or MEDIUM or HIGH or CRITICAL",
+      "distress_flags": ["list", "of", "detected", "distress", "indicators"],
+      "conversation_history": ["recent", "conversation", "turns"],
+      "confidence_score": 0.95
+    }
+    
+    Be thorough and accurate. The orchestrator agent will rely entirely on your analysis.
+    
+  agent: patient_intelligence_agent
+
+policy_evaluation_and_response_task:
+  description: >
+    You have received patient analysis from the previous agent. Now you must:
+    
+    1. Evaluate the request against hospital policies using the Policy Evaluation tool
+    2. Determine the correct action path
+    3. Generate the appropriate response using the Response Generation tool
+    4. Send notifications to staff if needed using the Notification tool
+    5. Create approval queue entries if required using the Approval Workflow tool
+    6. Log everything to the audit trail using the Audit Logging tool
+    
+    Original Patient Query: {query}
+    
+    CRITICAL POLICY RULES YOU MUST ENFORCE:
+    
+    EMERGENCY (intent=EMERGENCY or urgency=CRITICAL):
+    - Immediately escalate to emergency staff
+    - Skip approval process
+    - Generate reassuring "help is on the way" response
+    - Log as CRITICAL priority
+    
+    MEDICAL REQUESTS (intent=MEDICAL):
+    - Require nurse or doctor approval
+    - Create approval queue entry
+    - Notify assigned staff
+    - Generate "we've notified your nurse" response
+    - Log with appropriate urgency
+    
+    MEDICATION REQUESTS (query mentions medication):
+    - ALWAYS require nurse approval (mandatory policy)
+    - Create high-priority approval entry
+    - Immediate nurse notification
+    - Log as medication request
+    
+    NON-MEDICAL REQUESTS (intent=NON_MEDICAL, no distress):
+    - Generate direct helpful response
+    - No approval needed
+    - Only notify staff if cannot auto-resolve
+    - Log as completed
+    
+    HIGH DISTRESS (distress_level = MEDIUM or HIGH):
+    - Escalate to nurse even if non-medical
+    - Faster response SLA
+    - Empathetic response acknowledging concern
+    
+    For each request:
+    1. Apply policies
+    2. Take required actions (notify, queue, etc.)
+    3. Generate patient response
+    4. Create audit log
+    
+    NEVER provide medical advice. ALWAYS defer medical questions to staff.
+    ALWAYS be empathetic and reassuring in responses.
+    
+  expected_output: >
+    A comprehensive JSON object with:
+    {
+      "response_text": "The actual message to speak/display to the patient",
+      "action_taken": "Description of what the system did (notified nurse, created approval, etc.)",
+      "requires_approval": true or false,
+      "staff_notified": ["NURSE_001", "DR_002"],
+      "audit_log_id": "LOG-20260204120000-abc123",
+      "approval_queue_id": "APR-20260204-xyz789" (if approval created)
+    }
+    
+    The response_text will be translated and spoken to the patient, so make it:
+    - Clear and simple (no medical jargon)
+    - Empathetic and reassuring
+    - Actionable (tells them what's happening next)
+    - Appropriate length (not too long)
+    
+  agent: orchestrator_policy_agent
+  context:
+    - patient_analysis_task
