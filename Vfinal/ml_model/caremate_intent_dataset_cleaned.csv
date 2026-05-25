@@ -1,0 +1,1001 @@
+text,intent
+Can you change my next of kin information please.,document_submission
+Please come and check the monitor alarm,nurse_request
+Can someone give me an update on what is next,status_query
+Please Can someone come and collect my admission documents I would really appreciate it.,document_submission
+Actually Can the room be sanitised please is that possible?,utility_request
+Please I pressed the button by mistake sorry kindly help.,general_conversation
+Can you hear me? There is no hot water in the bathroom at the earliest please.,utility_request
+Can the nurse check my pain medication,nurse_request
+My chest is very tight I can't breathe,emergency
+Can you hear me? Can nurse help apply the cream the doctor prescribed thank you.,nurse_request
+I need help with the wheelchair to go downstairs,utility_request
+Excuse me Can I get the wifi password please can you help?,utility_request
+The room is too hot can you adjust the AC,utility_request
+What is the plan for my treatment,doctor_query
+plz my doctor put me on a liquid diet please send accordingly thank you.,nutrition_request
+Can someone check if my saline bag is okay,nurse_request
+Um Hello is anyone there thank you.,general_conversation
+Heart attack aa help,emergency
+Can I go for a small walk in the corridor,general_conversation
+When will the radiologist come,status_query
+Um My name is spelled wrong in the records please correct.,document_submission
+Excuse me I need another blanket thank you so much.,utility_request
+Can I get the wifi password please,utility_request
+My chest feels like it is being squeezed,emergency
+I have a rash that appeared please send the doctor,doctor_query
+I fell down and cannot get up,emergency
+i want a duplicate copy of my prescription at the earliest plz.,document_submission
+Um I need to submit my employee health card please.,document_submission
+Just wanted to say I finished my food can I get more please thank you.,nutrition_request
+Please bring a basin I need to wash,nurse_request
+Please What is the plan for my treatment thank you so much.,doctor_query
+Hi I need to submit my insurance pre-authorization.,document_submission
+The weather outside looks nice from the window,general_conversation
+My phone number has changed please update,document_submission
+Can someone bring my medication from the nursing station,utility_request
+Um Heavy bleeding from my arm.,emergency
+After the procedure I feel very uncomfortable please call doctor,doctor_query
+Has there been any change in my medication plan,status_query
+Can you hear me? My family wants to know the prognosis please ask please.,doctor_query
+I made a request an hour ago is it done,status_query
+I have been waiting for my meal for an hour,nutrition_request
+Just wanted to say I am being discharged and I just wanted to thank everyone,general_conversation
+What time will the doctor come for rounds today,status_query
+My face and lips are swelling up,emergency
+I need to fill the admission consent form,document_submission
+Um I feel suffocated please someone come is that possible?,emergency
+Enakku swaasam varalai help pannga,emergency
+Please I need a walking frame to go to the washroom I would really appreciate it.,utility_request
+Hello I was told the report comes in 2 hours it has been 3 at the earliest please.,status_query
+Can you hear me? Did the specialist review my case can you help?,status_query
+The sink tap is dripping constantly,utility_request
+I want to upload my insurance policy documents,document_submission
+Can I have upma or oats please,nutrition_request
+I can't breathe please help me,emergency
+My oxygen mask fell off I can't breathe,emergency
+Can someone bring the consent papers for me to sign,document_submission
+Can I have an itemized bill for my insurance,document_submission
+Can I have warm water please,nutrition_request
+Actually Is my bill ready.,status_query
+I need to scan this document please,document_submission
+Excuse me I missed my meal can someone bring food thank you.,nutrition_request
+Can you hear me? I need to eat before taking my medicine I would really appreciate it.,nutrition_request
+I need someone to talk to can a nurse come,nurse_request
+I feel very safe and comfortable here,general_conversation
+Um Hello CareMate.,general_conversation
+Can I have breakfast please it is late,nutrition_request
+Please ask the surgeon to come and check my wound,doctor_query
+Hello Can someone give me an update on what is next thank you so much.,status_query
+Can doctor come and explain the surgery risks,doctor_query
+Sharp chest pain starting now,emergency
+The room is very comfortable thank you,general_conversation
+Please I had the test this morning and I have questions can you help?,doctor_query
+Please bring my meal I am hungry,nutrition_request
+I do not need anything right now just checking,general_conversation
+Can I get a tissue box please,utility_request
+plz my stitches feel like they might be opening please call doctor i would really appreciate it.,doctor_query
+Can the nurse help me clean up,nurse_request
+The TV in my room is not working,utility_request
+Hello Severe bleeding from my stomach area please.,emergency
+The tea was not included can you send,nutrition_request
+I want to talk to the specialist doctor please,doctor_query
+Just wanted to say The date of birth in my file is wrong,document_submission
+I need a newspaper please,utility_request
+I did not get my prescribed diet please resend,nutrition_request
+I am very thirsty can someone bring water,nutrition_request
+I have my Aadhar card for verification,document_submission
+I think the baby is coming please help,emergency
+Please I need to be repositioned I have pressure sore pain.,nurse_request
+When will I get my test results,status_query
+Hi After the procedure I feel very uncomfortable please call doctor this is urgent.,doctor_query
+Can someone take my health insurance documents thank you.,document_submission
+Hi Can someone check on my biopsy result kindly help.,status_query
+Can I get a thicker blanket please,utility_request
+I think I am having an allergic reaction,emergency
+The date of birth in my file is wrong,document_submission
+Um Can the cardiologist be called please I would really appreciate it.,doctor_query
+Can you take a photo of this report,document_submission
+Please turn off the light it is too bright at the earliest please.,utility_request
+Somebody help me please this is critical at the earliest please.,emergency
+I passed out briefly please check me,emergency
+Has my appointment with the specialist been fixed,status_query
+What is the status of my request,status_query
+My stomach is upset can I get plain rice and curd,nutrition_request
+Is my urine test result available,status_query
+I am scared can someone come and be with me,nurse_request
+Just wanted to say The nurses here are so kind thank you this is urgent.,general_conversation
+My room window won't close properly,utility_request
+Actually I need help changing my sleeping position,nurse_request
+Can you hear me? What happened to my nurse request from before can you help?,status_query
+Hello is anyone there,general_conversation
+I need the medical fitness certificate,document_submission
+Um Please bring my meal I am hungry thank you.,nutrition_request
+Hello The TV in my room is not working kindly help.,utility_request
+Actually Nurse ko bulao please at the earliest please.,nurse_request
+Hello The staff here is very professional is that possible?,general_conversation
+Can I know the estimate of my bill so far,status_query
+Hello I am just checking in to say I am fine is that possible?,general_conversation
+I want to talk to the specialist doctor please kindly help.,doctor_query
+Can you hear me? I had the test this morning and I have questions thank you.,doctor_query
+I feel very weak and dizzy since the medicine started.,doctor_query
+Hello I just want to say hi,general_conversation
+My family is waiting outside has the pass been given,status_query
+Bahut dard hai please koi aao,emergency
+hello pleae get me some fruit is that possible?,nutrition_request
+Can I listen to some music while resting,general_conversation
+Actually When will my blanket arrive is that possible?,status_query
+excuse me can someone take my health insurance documents at the earliest pleae.,document_submission
+I finished my food can I get more please,nutrition_request
+Can I ask the doctor about my test results,doctor_query
+Please I have a rash that appeared please send the doctor is that possible?,doctor_query
+Can you hear me? The toilet is blocked please send someone.,utility_request
+Nothing urgent just saying hi,general_conversation
+Hi Can the nurse check my pain medication thank you so much.,nurse_request
+I slipped and fell please send someone,emergency
+I coughed up blood just now,emergency
+The AC is making a loud noise,utility_request
+Please prepare my medical certificate I need it urgently,document_submission
+Any update from the doctor on my condition,status_query
+Can you send the menu for today,nutrition_request
+Saans nahi aa raha mujhe,emergency
+I had a good sleep last night,general_conversation
+Hello Is my food request approved yet thank you so much.,status_query
+Help me I am not able to breathe,emergency
+I need a heating pad for my back,utility_request
+Actually Is my physiotherapy session today thank you so much.,status_query
+I want to discuss my blood report with the doctor,doctor_query
+The air conditioning is too cold please reduce,utility_request
+Hello Can I get some soup please can you help?,nutrition_request
+Seene mein bahut dard ho raha hai,emergency
+Is my family allowed to visit now thank you so much.,general_conversation
+I am okay for now thank you,general_conversation
+Doctor I have been feeling nauseous since morning,doctor_query
+Please I need my blood pressure checked please thank you.,nurse_request
+Um My room window won't close properly at the earliest please.,utility_request
+I feel like I am going to faint,emergency
+Nurse ko bulao please,nurse_request
+I am feeling anxious please send the nurse,nurse_request
+Can you hear me? The bathroom needs to be cleaned please can you help?,utility_request
+Since the injection I feel very unwell,doctor_query
+Excuse me My room needs cleaning please can you help?,utility_request
+Just wanted to say My tray came but the food was wrong this is urgent.,nutrition_request
+just wanted to say when is my next doctro round is that possible?,status_query
+Actually I need a urine bottle please I would really appreciate it.,utility_request
+I need some cotton please,utility_request
+excuse me pleae ask the surgeon to come and check my wound thank you so much.,doctor_query
+um can you send the nursing staff plz,nurse_request
+Hi My room needs cleaning please thank you.,utility_request
+How long more will it take for the nurse to come,status_query
+Emergency please the pain is too much,emergency
+I need emergency help right now this is urgent.,emergency
+Can you hear me? Namaste is that possible?,general_conversation
+I feel unconscious please help,emergency
+Um The monitor alarm is beeping loudly please come kindly help.,emergency
+Please I almost fell out of the bed thank you.,emergency
+Can I have the crutches please,utility_request
+Nurse ku sollunga varalai,nurse_request
+Just wanted to say I just fell in the bathroom thank you so much.,emergency
+Hi Please take my company medical card for billing thank you.,document_submission
+I miss my family,general_conversation
+Can you hear me? Shukriya bahut achha service hai I would really appreciate it.,general_conversation
+Can someone bring my discharge summary to my room,utility_request
+Please My phone number has changed please update kindly help.,document_submission
+Hello The drip seems to be running out.,nurse_request
+My blanket is wet can you replace it,utility_request
+Can you check my blood sugar levels,nurse_request
+Can someone help me freshen up,nurse_request
+Just wanted to say Has the doctor signed my discharge papers this is urgent.,status_query
+Can someone empty the dustbin in my room,utility_request
+Can you change my next of kin information,document_submission
+I have severe chest pain,emergency
+Can my doctor come and see me,doctor_query
+excuse me doctro told me to let them know if i have fever after surgery this is urgent.,doctor_query
+Just wanted to say Can someone mop the floor there is water thank you so much.,utility_request
+I need to sign the consent form for surgery,document_submission
+I want to add my emergency contact details,document_submission
+I fainted just now someone please come,emergency
+My IV has come out and it is bleeding,emergency
+The medication side effect is bothering me,doctor_query
+I fell down from the bed,emergency
+hello the team has been wonderful thank you kindly helf.,general_conversation
+Hi I have handwritten notes from my doctor please scan is that possible?,document_submission
+Hello Namaste thank you so much.,general_conversation
+Please I have a temperature of 101 please tell the doctor thank you so much.,doctor_query
+Actually Can I get the soft diet option please thank you so much.,nutrition_request
+I dropped something on the floor can nurse pick it up,nurse_request
+Can you hear me? I need a walking frame to go to the washroom can you help?,utility_request
+Good evening how are you,general_conversation
+Hello Is my doctor query still pending at the earliest please.,status_query
+pls what happened to my nurse request from before.,status_query
+How long will I need to stay in the hospital,doctor_query
+Chest pain very bad please come now,emergency
+Can nurse help apply the cream the doctor prescribed,nurse_request
+I feel my heartbeat is irregular please tell the doctor,doctor_query
+Just wanted to say Can I get electrolyte drink please thank you so much.,nutrition_request
+Hi I need to eat before taking my medicine,nutrition_request
+I am feeling more positive today,general_conversation
+Actually I have a concern about the medicine dosage at the earliest please.,doctor_query
+Did the specialist review my case,status_query
+The food was cold can I get fresh warm food,nutrition_request
+I need help reaching the water on the side table,nurse_request
+Help me help me I am dying,emergency
+I feel suffocated please someone come,emergency
+Um I am feeling very alone can a nurse come sit with me thank you so much.,nurse_request
+I am feeling very alone can a nurse come sit with me,nurse_request
+Can I get a certificate of hospitalization for my office,document_submission
+Painkiller time achu la sister,nurse_request
+I want some bread and butter please,nutrition_request
+The nurses here are so kind thank you,general_conversation
+I have a question about my medication,doctor_query
+Please I finished my food can I get more please,nutrition_request
+Hello Can I have an extra pillow at the earliest please.,utility_request
+Can I get an extra meal tray for my attendant,utility_request
+Alright I am going to rest now,general_conversation
+Can someone check if my food order was placed,nutrition_request
+Can you hear me? Can someone help me freshen up thank you.,nurse_request
+Hello Did the specialist review my case is that possible?,status_query
+Actually Very good hospital I will recommend to others.,general_conversation
+Can you hear me? Can you check if my MRI report is ready.,status_query
+Hi I cannot take this pain anymore I would really appreciate it.,emergency
+Please I need to submit my insurance pre-authorization can you help?,document_submission
+Is there a charger I can borrow,utility_request
+Any update on my request,status_query
+Hi good morning,general_conversation
+Just wanted to say Test result vandha doctor kita kelu please.,doctor_query
+I need a bedside commode please,utility_request
+Please Nurse anne please come here,nurse_request
+I am lactose intolerant please no milk products,nutrition_request
+The food trolley did not come to my room,nutrition_request
+Um I am vegetarian please do not send non-veg food can you help?,nutrition_request
+Hello Can I get some soup please at the earliest please.,nutrition_request
+Please The staff here is very professional this is urgent.,general_conversation
+I want to submit my old hospital records,document_submission
+I am diabetic please make sure the food is appropriate,nutrition_request
+Just wanted to say Severe bleeding from my stomach area this is urgent.,emergency
+Is my bill ready,status_query
+Just wanted to say Please come and check the monitor alarm thank you.,nurse_request
+Excuse me Nurse ko bulao please.,nurse_request
+I was given non-veg but I am vegetarian please change,nutrition_request
+Please Can I get a sanitizer bottle for my room thank you.,utility_request
+Excuse me Can someone check on my biopsy result at the earliest please.,status_query
+Hi I am vomiting blood please come quickly.,emergency
+Call the doctor now it is serious,emergency
+I have my previous medical reports can someone take them,document_submission
+I am shivering and shaking please help me,emergency
+Here is the cashless approval letter from my insurer,document_submission
+Excuse me I need to submit my referral letter from my GP at the earliest please.,document_submission
+Can I get some water please,nutrition_request
+The room light is too bright can you dim it,utility_request
+Please turn off the light it is too bright,nurse_request
+Can the nurse bring an extra pillow,nurse_request
+My insurance details need updating,document_submission
+I need a call bell replacement mine is broken,utility_request
+Just wanted to say I want to speak to my doctor this is urgent.,doctor_query
+Please I need my prescription copy for pharmacy thank you so much.,document_submission
+Help pannga enna aachu theriyalai,emergency
+Is my scan report ready is that possible?,status_query
+Hello I need help changing into clean clothes,nurse_request
+Hello I want to submit my blood test reports from last week thank you so much.,document_submission
+My chest is hurting so much,emergency
+Um I feel my heartbeat is irregular please tell the doctor thank you so much.,doctor_query
+Thank you so much for your help,general_conversation
+Actually I need the medical fitness certificate can you help?,document_submission
+I am feeling depressed can I speak to the doctor,doctor_query
+I need more hand sanitizer,utility_request
+I have my ID proof for the records thank you.,document_submission
+Hello Can someone help me use the restroom.,nurse_request
+Can you hear me? I like talking to you CareMate I would really appreciate it.,general_conversation
+Just wanted to say The weather outside looks nice from the window this is urgent.,general_conversation
+Can I have a fresh sheet please,utility_request
+I cannot breathe at all,emergency
+Sister please come to bed 4,nurse_request
+Please I need my blood pressure checked please can you help?,nurse_request
+Breathing problem la irukken,emergency
+How many more days will I be here,general_conversation
+just wanted to say i need help reaching the water on the side table pleae.,nurse_request
+Is there a chapel or prayer room in the hospital,general_conversation
+Please Status check on my earlier request please at the earliest please.,status_query
+just wanted to say can someone check on my biopsy result kindly hlep.,status_query
+I need a urine bottle please,utility_request
+Excuse me Can the room be sanitised please kindly help.,utility_request
+I want to know more about my treatment plan,doctor_query
+Please I want to give my vaccination records this is urgent.,document_submission
+I want chapati not rice please,nutrition_request
+Blood is coming out a lot,emergency
+Can the doctor explain my diagnosis to me,doctor_query
+Please bring the form for blood transfusion consent,document_submission
+When is the dietitian coming kindly help.,status_query
+The staff here is very professional,general_conversation
+Can I watch TV is the TV time over,general_conversation
+I feel a sudden severe headache,emergency
+Kya tum samajh sakte ho hindi,general_conversation
+Um Please add this diagnosis report to my electronic file thank you.,document_submission
+Please get me some fruit,nutrition_request
+I want to say goodbye I am going home today,general_conversation
+I am happy with the treatment I am receiving,general_conversation
+There is some discharge from the wound,doctor_query
+Hi I need a call bell replacement mine is broken at the earliest please.,utility_request
+pls add this diagnosis report to my electronic file thank you so much.,document_submission
+Please send Jain food only no onion garlic,nutrition_request
+Actually Can someone turn on the fan please I would really appreciate it.,utility_request
+Just wanted to say I have a temperature of 101 please tell the doctor thank you so much.,doctor_query
+My doctor put me on a liquid diet please send accordingly,nutrition_request
+Can you check if my MRI report is ready,status_query
+Hi Can I get an ice pack please,utility_request
+I am not feeling well in general please come,nurse_request
+Can the room be sanitised please,utility_request
+Can you understand Tamil,general_conversation
+Can you ask the doctor if I can start eating normally,doctor_query
+Um I need more hand sanitizer is that possible?,utility_request
+I need to submit my referral letter from my GP,document_submission
+I need a nurse right now,nurse_request
+Can you hear me? Seene mein bahut dard ho raha hai thank you so much.,emergency
+This hospital is very clean I am impressed,general_conversation
+Please take my company medical card for billing,document_submission
+actually can i get extra serving i am still hungrey is that possible?,nutrition_request
+The remote control battery is dead,utility_request
+You are very helpful CareMate,general_conversation
+Just giving feedback the bathroom smell is not great,general_conversation
+Please Can someone bring my discharge summary to my room I would really appreciate it.,utility_request
+Um Can the admin person come to collect my documents at the earliest please.,document_submission
+My family brought home food can I eat it,nutrition_request
+I feel nauseous but I need to eat can I get something mild,nutrition_request
+Can I have a footstool please,utility_request
+Hello Breathing is very painful right now,emergency
+I have a temperature of 101 please tell the doctor.,doctor_query
+My call button is not working can someone come,nurse_request
+My water jug is empty please refill it,nutrition_request
+Just wanted to say I cannot eat spicy food please tell the kitchen,nutrition_request
+I was told the report comes in 2 hours it has been 3,status_query
+Please Am I being transferred to another ward I would really appreciate it.,status_query
+I need a bedpan please,nurse_request
+Doctor se milna hai mujhe,doctor_query
+excuse me i have a temperature of 101 pleae tell the doctor at the earliest please.,doctor_query
+I am feeling very weak because I have not eaten thank you.,nutrition_request
+What is the time please,general_conversation
+Actually Has there been any change in my medication plan thank you so much.,status_query
+Actually I need help going to the bathroom.,nurse_request
+Worst headache I have ever had suddenly,emergency
+Just wanted to say The TV in my room is not working please.,utility_request
+Can you hear me? Is anyone monitoring my situation kindly help.,status_query
+I was not able to sleep well last night,general_conversation
+I have a prescription from another doctor please add to my file,document_submission
+I want to call my daughter can I use the phone,general_conversation
+Can you hear me? Doctor said I can eat now can you send food thank you so much.,nutrition_request
+I need an extension cord for my phone,utility_request
+I can't get any air in,emergency
+Hi Can the dietitian come and speak to me about my food plan kindly help.,nutrition_request
+Actually I have not eaten since morning can I get food kindly help.,nutrition_request
+I feel the current treatment is not helping please tell doctor,doctor_query
+Pain ki dawai chahiye nurse se poochho,nurse_request
+I want to give my vaccination records,document_submission
+I need help adjusting my bed position,nurse_request
+can you hear me? nuse ku sollunga varalai this is urgent.,nurse_request
+Um My family member needs to sign the consent can you bring the form at the earliest please.,document_submission
+I spilled water can someone come clean,utility_request
+Everyone is so caring and attentive,general_conversation
+I am struggling to breathe,emergency
+Please scan my allergy report and add to records,document_submission
+I have my MRI CD can you add it to my file,document_submission
+Excuse me I need to submit my referral letter from my GP can you help?,document_submission
+My throat is swelling I can't swallow,emergency
+Just wanted to say I fell down and cannot get up.,emergency
+Are you a robot or a human at the earliest please.,general_conversation
+hi the room is very cold can i get a warm blanket kindly hlep.,utility_request
+I want to update my blood group in the records,document_submission
+Hi Thank you for sending the nurse quickly thank you.,general_conversation
+Can the nurse come and check my vitals,nurse_request
+I am experiencing a new symptom I want the doctor to know,doctor_query
+pls can you please send a nurse to my room at the earliest please.,nurse_request
+Please turn off the light it is too bright kindly help.,nurse_request
+Actually Can you take a photo of this report I would really appreciate it.,document_submission
+Hello I am not sure if this is normal after surgery is that possible?,doctor_query
+The team has been wonderful thank you,general_conversation
+Can I get the soft diet option please,nutrition_request
+Please I am very thirsty can someone bring water kindly help.,nutrition_request
+Hello Here is my insurance card please scan it thank you so much.,document_submission
+I want to know what is for dinner today,nutrition_request
+I am a little anxious about tomorrow's procedure,general_conversation
+Just wanted to say Can I know the estimate of my bill so far is that possible?,status_query
+Um Has my blood test result come yet,status_query
+Just wanted to say everyone has been very nice,general_conversation
+Hello I did not get my afternoon snack can you help?,nutrition_request
+Did the lab send my report,status_query
+hello can the cardiologist be called pls thank you.,doctor_query
+I feel moderate pain can someone come kindly help.,nurse_request
+I have my ECG report from yesterday,document_submission
+Excuse me Can I have breakfast please it is late,nutrition_request
+I feel paralyzed on one side,emergency
+Hi Throat is closing up please help,emergency
+There is an unpleasant smell in my room,utility_request
+Hello I need to be repositioned I have pressure sore pain kindly help.,nurse_request
+Please arrange for the doctor to come,doctor_query
+Good afternoon,general_conversation
+The bathroom needs to be cleaned please,utility_request
+Just wanted to say I need my prescription copy for pharmacy thank you.,document_submission
+Can the doctor come and check my stitches,doctor_query
+Is my family allowed to visit now,general_conversation
+Can you hear me? Can the nurse help me clean up can you help?,nurse_request
+Can the nurse adjust my pillow position,nurse_request
+Can someone check my oxygen levels,nurse_request
+I have high fever and seizure please come,emergency
+My stitches feel like they might be opening please call doctor,doctor_query
+hi i need to fill the admission consent form kindly hlep.,document_submission
+I want a duplicate copy of my prescription,document_submission
+I feel like I am suffocating,emergency
+I finished my food can I get more please thank you so much.,nutrition_request
+My pain level is increasing can someone come,nurse_request
+Mujhe bhook lagi hai khana chahiye,nutrition_request
+Just wanted to say When will my blanket arrive thank you.,status_query
+Is it raining outside today,general_conversation
+Um I need fresh towels please at the earliest please.,utility_request
+Excuse me When is my x-ray result expected.,status_query
+Status check on my earlier request please,status_query
+Chest pain is unbearable please help,emergency
+High fever and convulsions please come fast,emergency
+Excuse me Can someone scan my discharge summary from my previous hospital at the earliest please.,document_submission
+Hello Can someone check if my saline bag is okay this is urgent.,nurse_request
+Um I have my ECG report from yesterday thank you so much.,document_submission
+Excuse me I was not able to sleep well last night at the earliest please.,general_conversation
+Actually There is an error in my admission form please fix,document_submission
+I have not eaten since morning can I get food,nutrition_request
+Is anyone monitoring my situation,status_query
+Actually I am having a reaction to the medicine kindly help.,emergency
+Is this medicine safe with my other conditions,doctor_query
+My blanket is wet can you replace it is that possible?,utility_request
+Unbearable pain please send someone immediately,emergency
+Please I am very grateful for the support can you help?,general_conversation
+Wound is bleeding very much,emergency
+Here are my x-ray films please keep for records,document_submission
+Nandri sister,general_conversation
+Can you hear me? I need a walking frame to go to the washroom,utility_request
+Can I get some soup please,nutrition_request
+Can you hear me? I can't get any air in this is urgent.,emergency
+Hi I want to talk to the specialist doctor please is that possible?,doctor_query
+Nurse ku sollunga varalai I would really appreciate it.,nurse_request
+Can you hear me? Can someone help me with oral care is that possible?,nurse_request
+Hello I am lactose intolerant please no milk products I would really appreciate it.,nutrition_request
+Hi Is the nurse coming soon I have been waiting please.,status_query
+Just wanted to say I have a headache that is not going can doctor see is that possible?,doctor_query
+Can I get a sanitizer bottle for my room,utility_request
+Um Can someone come and collect my admission documents at the earliest please.,document_submission
+Um Am I being transferred to another ward please.,status_query
+My breathing has stopped help,emergency
+Nee yaaru,general_conversation
+Can I get some juice,nutrition_request
+I really appreciate the care I am getting,general_conversation
+Hi My family brought home food can I eat it can you help?,nutrition_request
+Excuse me The team has been wonderful thank you kindly help.,general_conversation
+hi i have a rash that appeared plz send the doctor i would really appreciate it.,doctor_query
+Please come and check my temperature,nurse_request
+just wanted to say i need nursing assistance plz.,nurse_request
+When is my x-ray result expected,status_query
+Can someone update my address in the system,document_submission
+Excuse me Blood is coming out a lot this is urgent.,emergency
+Just wanted to say Is anyone monitoring my situation thank you.,status_query
+Um I think I am having an allergic reaction thank you.,emergency
+actually can i have my lunch plz i would really appreciate it.,nutrition_request
+Um I have a concern about the medicine dosage kindly help.,doctor_query
+Heart pain very serious please come,emergency
+Um Is the ambulance arranged for my discharge,status_query
+Can you hear me? Hives all over and throat tightening this is urgent.,emergency
+When is visiting hour please,general_conversation
+Actually Can you check if my MRI report is ready can you help?,status_query
+Can someone change my pillow cover please.,utility_request
+I had a seizure just now,emergency
+Somebody help me please this is critical,emergency
+I cannot lie down comfortably can someone help,nurse_request
+Hello I would like a second opinion on my condition thank you so much.,doctor_query
+Test result vandha doctor kita kelu,doctor_query
+What is happening with my case please update me,status_query
+Excuse me Can someone take my health insurance documents thank you so much.,document_submission
+I have a headache that is not going can doctor see,doctor_query
+My food has not arrived yet it is very late,nutrition_request
+Please I cannot take this pain anymore this is urgent.,emergency
+Hi I slipped and fell please send someone at the earliest please.,emergency
+Just wanted to say Can someone check on my biopsy result thank you so much.,status_query
+Just wanted to say Can someone bring my discharge summary to my room,utility_request
+I have birth certificate for pediatric admission please collect I would really appreciate it.,document_submission
+Can you hear me? Can the nurse bring an extra pillow please.,nurse_request
+Please Can I get some water please thank you.,nutrition_request
+Can the room be aired out please,utility_request
+Here is my insurance card please scan it,document_submission
+The food quality is very good here,general_conversation
+I am feeling a little bored here,general_conversation
+Am I being transferred to another ward,status_query
+I need my pain medicine please,nurse_request
+hi is my discharge process started can you helf?,status_query
+I need more fluids please,nutrition_request
+I would like some rice and dal please,nutrition_request
+Please add my allergy information to my file,document_submission
+Can I take this medicine with food or not,doctor_query
+When will I be discharged please ask the doctor,doctor_query
+Excuse me I have a rash that appeared please send the doctor at the earliest please.,doctor_query
+Um I have birth certificate for pediatric admission please collect.,document_submission
+Can I get an extra blanket please it is cold,utility_request
+Can you check if my request is being processed,status_query
+Thank you for sending the nurse quickly,general_conversation
+Hi What is the status of my request this is urgent.,status_query
+I want to submit my blood test reports from last week,document_submission
+Post operation pain is very high please inform doctor,doctor_query
+Can you hear me? Here is the cashless approval letter from my insurer kindly help.,document_submission
+When will the doctor visit me today,doctor_query
+Please change my bedsheet it is damp,nurse_request
+Actually When is my x-ray result expected please.,status_query
+Is my doctor query still pending,status_query
+Can you hear me? I feel the current treatment is not helping please tell doctor kindly help.,doctor_query
+Hello Is this medicine safe with my other conditions this is urgent.,doctor_query
+Can you hear me? I want chapati not rice please thank you.,nutrition_request
+The drip seems to be running out,nurse_request
+Just wanted to say I really appreciate the care I am getting.,general_conversation
+I missed my meal can someone bring food,nutrition_request
+I need the doctor's report for insurance claim,document_submission
+hi pls bring my meal i am hungry i would really appreciate it.,nutrition_request
+Um I have a headache that is not going can doctor see can you help?,doctor_query
+Excuse me Can someone check on my roommate they look unwell can you help?,nurse_request
+Actually There is an unpleasant smell in my room I would really appreciate it.,utility_request
+I need help turning to the other side,nurse_request
+Please someone come I am in danger,emergency
+Just wanted to say I cannot eat spicy food please tell the kitchen kindly help.,nutrition_request
+I need a wheelchair to go to the scan,utility_request
+Can someone give me a copy of my lab results,document_submission
+Please There is an error in my admission form please fix can you help?,document_submission
+I feel like vomiting but need food what can I eat,nutrition_request
+I need help going to the bathroom,nurse_request
+Is my medicine prescription ready for discharge,status_query
+Hello Can someone give me a copy of my lab results is that possible?,document_submission
+Can you hear me? I missed my meal can someone bring food,nutrition_request
+Maarpu vali maarpu vali help,emergency
+Hello Can I go for a small walk in the corridor this is urgent.,general_conversation
+Can the records team come and collect these documents,document_submission
+Blood everywhere please hurry,emergency
+Just wanted to say I am scared can someone come and be with me can you help?,nurse_request
+My wound is hurting a little can nurse see,nurse_request
+Can I have idli or dosa for breakfast,nutrition_request
+The toilet is blocked please send someone,utility_request
+I need my dressing changed,nurse_request
+Excuse me Please bring my meal I am hungry please.,nutrition_request
+I submitted a request earlier has anyone seen it,status_query
+Can you hear me? Please change my bedsheet it is damp please.,nurse_request
+Excuse me Has my blood test result come yet kindly help.,status_query
+Can someone check on my biopsy result,status_query
+Um I want to add my emergency contact details kindly help.,document_submission
+Um My family is waiting outside has the pass been given this is urgent.,status_query
+Just wanted to say My catheter is causing severe pain please help thank you.,emergency
+Hello I feel much better after the treatment today thank you.,general_conversation
+Excuse me Nothing urgent just saying hi kindly help.,general_conversation
+There is a crushing pain in my chest,emergency
+Excuse me I cannot eat salt please send low sodium food at the earliest please.,nutrition_request
+Can you hear me? I need a bag to put my personal items.,utility_request
+I need another blanket,utility_request
+Can someone turn on the light I can't reach the switch,utility_request
+Can I get a sanitizer bottle for my room is that possible?,utility_request
+I need a walking frame to go to the washroom,utility_request
+Actually I have a concern about the medicine dosage is that possible?,doctor_query
+Doctor told me to let them know if I have fever after surgery,doctor_query
+Please My phone number has changed please update is that possible?,document_submission
+Please help me brush my teeth,nurse_request
+I want to know the progress of my treatment,status_query
+Please help me move my legs on the bed,nurse_request
+Vanakkam,general_conversation
+I feel moderate pain can someone come,nurse_request
+Um I am Muslim can I have halal food only please thank you.,nutrition_request
+Can someone scan my discharge summary from my previous hospital,document_submission
+Hello Can the doctor review my pain medication is that possible?,doctor_query
+Just wanted to say Can someone come and collect my admission documents this is urgent.,document_submission
+Everything is going black,emergency
+When will I be moved to a private room,status_query
+Feeling very faint and weak suddenly,emergency
+Can I get a wheelchair please,utility_request
+I have a gluten allergy please be careful with my food,nutrition_request
+Can you get me a phone charger please,utility_request
+I am feeling anxious please send the nurse can you help?,nurse_request
+Hi Is anyone monitoring my situation thank you.,status_query
+Is my food request approved yet,status_query
+Hello I spilled water can someone come clean thank you so much.,utility_request
+I like talking to you CareMate,general_conversation
+Pasikudhu sapdala please,nutrition_request
+Can I get electrolyte drink please,nutrition_request
+Just wanted to say Good afternoon this is urgent.,general_conversation
+actually i think the baby is coming plz help kindly help.,emergency
+Doctor ne report dekha kya abhi tak,doctor_query
+Just wanted to say I have a prescription from another doctor please add to my file thank you.,document_submission
+Can you arrange a wheelchair for my wife,utility_request
+Okay thank you goodbye,general_conversation
+I need to submit my employee health card,document_submission
+Please ask the doctor about an alternative medicine,doctor_query
+Can someone hang my clothes they are on the floor,utility_request
+Um Since the injection I feel very unwell this is urgent.,doctor_query
+My catheter is uncomfortable can nurse adjust,nurse_request
+Can you tell me how long the wait will be,status_query
+um can someone turn on the fan pls at the earliest please.,utility_request
+Blood in my vomit this is serious,emergency
+I cannot eat spicy food please tell the kitchen,nutrition_request
+Any update from the doctor on my condition can you help?,status_query
+Has the utility team received my request,status_query
+I cannot eat salt please send low sodium food,nutrition_request
+Um I want to speak to my doctor can you help?,doctor_query
+My stomach is hurting a lot please ask the doctor,doctor_query
+Can you raise the head of my bed please,nurse_request
+Can the dietitian come and speak to me about my food plan,nutrition_request
+Excuse me My IV has come out and it is bleeding this is urgent.,emergency
+I am gasping for air please come,emergency
+There is a very cold draft can someone check the window,utility_request
+actually i want to upload my insurance policy documents can you hlep?,document_submission
+Hello I want chapati not rice please thank you.,nutrition_request
+Um I spilled water can someone come clean kindly help.,utility_request
+Ek aur kambal chahiye please,utility_request
+Can doctor explain what the scan showed,doctor_query
+When is the ICU transfer happening,status_query
+Romba vali irukku udhavi seyyungal,emergency
+The nurse was a little rude please note,general_conversation
+Can you hear me? Can someone mop the floor there is water this is urgent.,utility_request
+Hi I need help reaching the water on the side table please.,nurse_request
+Hello I like talking to you CareMate please.,general_conversation
+I need a walking aid please,utility_request
+Can I have some coconut water,nutrition_request
+Please My catheter is causing severe pain please help,emergency
+I think I am having a heart attack,emergency
+Excuse me Has the room change been arranged thank you so much.,status_query
+Is my discharge process started,status_query
+I want to upload my pathology report to the system,document_submission
+Can you hear me? What happened to my nurse request from before is that possible?,status_query
+I need fresh towels please,utility_request
+Can I know when the discharge formalities will be done,status_query
+I need socks my feet are cold,nurse_request
+Has my request for a different room been approved kindly help.,status_query
+can you hear me? the toilet is blocked pleae send someone i would really appreciate it.,utility_request
+What day is today,general_conversation
+Thank you CareMate you are very helpful,general_conversation
+I need to see a physician,doctor_query
+My tray came but the food was wrong,nutrition_request
+Did the nurse get my message,status_query
+I want some warm milk please,nutrition_request
+Thanks for arranging the wheelchair so fast,general_conversation
+Actually Seene mein bahut dard ho raha hai is that possible?,emergency
+My back hurts can someone fix the bed angle,nurse_request
+Please tell the doctor I need to talk to him,doctor_query
+Can someone come and collect my admission documents,document_submission
+Is CareMate always available at night too,general_conversation
+Just wanted to say Please scan my allergy report and add to records this is urgent.,document_submission
+I have the TPA form filled out please collect it,document_submission
+Hello I need nursing assistance is that possible?,nurse_request
+Is my scan report ready kindly help.,status_query
+Excuse me I am in excruciating pain please help is that possible?,emergency
+Please I need to sign the consent form for surgery please.,document_submission
+Can you hear me? The room is very comfortable thank you is that possible?,general_conversation
+Um I have my MRI CD can you add it to my file can you help?,document_submission
+I need nursing assistance,nurse_request
+I am vegetarian please do not send non-veg food,nutrition_request
+Hello I feel the current treatment is not helping please tell doctor at the earliest please.,doctor_query
+Um I feel very cold and shivering doctor said to report this thank you so much.,doctor_query
+Hi When will the doctor visit me today is that possible?,doctor_query
+I have some pain can a nurse check on me,nurse_request
+excuse me i need an extension cord for my phone plz.,utility_request
+Please Can the nurse please come and check on me is that possible?,nurse_request
+can you hear me? i finished my food can i get more pls,nutrition_request
+Can I get the soft diet option please kindly help.,nutrition_request
+They forgot to give me dinner please send now,nutrition_request
+Good night I will sleep now,general_conversation
+That is all I needed thanks,general_conversation
+Emergency emergency please someone help me,emergency
+I am having a reaction to the medicine,emergency
+Excuse me My family brought home food can I eat it thank you so much.,nutrition_request
+I had the test this morning and I have questions,doctor_query
+The doctor explained everything so well,general_conversation
+Please Has the doctor seen my report yet I would really appreciate it.,status_query
+I want to speak to my doctor,doctor_query
+Hi I did not get my prescribed diet please resend kindly help.,nutrition_request
+I feel very cold and shivering doctor said to report this,doctor_query
+I have the guarantee letter from my employer please collect,document_submission
+I am allergic to one of the tablets please tell doctor,doctor_query
+My husband is coming can you let him in,general_conversation
+Is my scan report ready,status_query
+Do you understand Hindi too,general_conversation
+Shukriya bahut achha service hai,general_conversation
+Very good hospital I will recommend to others,general_conversation
+When will my blanket arrive,status_query
+I did not get my afternoon snack,nutrition_request
+Just wanted to say I need some cotton please,utility_request
+Can you hear me? Please check my pulse it feels weird this is urgent.,nurse_request
+I have swelling in my legs please send the doctor,doctor_query
+Hello Ek aur kambal chahiye please can you help?,utility_request
+Just wanted to say Is my bill ready can you help?,status_query
+I am in excruciating pain please help,emergency
+I just fell in the bathroom,emergency
+I am bleeding and cannot stop it,emergency
+excuse me i had a good sleep last night plz.,general_conversation
+Um I need a straw to drink water kindly help.,utility_request
+Just wanted to say I am not sure if this is normal after surgery please.,doctor_query
+Just wanted to say Can someone update my address in the system.,document_submission
+Can I know when the nurse will come,status_query
+Has my request for a different room been approved,status_query
+My wound dressing is loose please fix,nurse_request
+Um I need to scan this document please please.,document_submission
+Can you hear me? Can someone bring the wheelchair for my x-ray appointment.,utility_request
+Please check my pulse it feels weird,nurse_request
+What time will the scan be done,status_query
+Where do I sign the consent documents,document_submission
+There is no hot water in the bathroom,utility_request
+The meal was cold this morning just wanted to let you know,general_conversation
+Please Can you ask the doctor if I can start eating normally please.,doctor_query
+Can I get my discharge summary please,document_submission
+I just wanted to mention the wait time was a bit long,general_conversation
+My family member needs to sign the consent can you bring the form,document_submission
+When is my next doctor round,status_query
+I need help with my walker to go to the window,nurse_request
+Doctor varaliya enna aachi,doctor_query
+I am just checking in to say I am fine,general_conversation
+I would like a second opinion on my condition,doctor_query
+How does this system work exactly,general_conversation
+hello pls ask the surgeon to come and check my wound please.,doctor_query
+Hello Please come quickly I need assistance thank you so much.,nurse_request
+Are you a robot or a human,general_conversation
+Can you hear me? My stitches feel like they might be opening please call doctor is that possible?,doctor_query
+My gown is wet can nurse help change,nurse_request
+I need my blood pressure checked please,nurse_request
+Can someone help me use the restroom,nurse_request
+Can you hear me? I need a copy of my medical records kindly help.,document_submission
+just wanted to say when is visiting hour plz is that possible?,general_conversation
+My body is shaking uncontrollably,emergency
+Can someone bring the wheelchair for my x-ray appointment,utility_request
+Can you hear me? Can I get electrolyte drink please thank you.,nutrition_request
+I have a stack of old reports to submit,document_submission
+Um Good afternoon thank you.,general_conversation
+Can you hear me? There are ants in my room please help please.,utility_request
+When is the dietitian coming,status_query
+Namaste,general_conversation
+Nurse anne please come here,nurse_request
+Um I have a concern about the medicine dosage.,doctor_query
+My reading light is not working can someone fix,utility_request
+um can you check if my request is being processed plz.,status_query
+Can you hear me? I feel like vomiting but need food what can I eat this is urgent.,nutrition_request
+Actually I have handwritten notes from my doctor please scan please.,document_submission
+I need my prescription copy for pharmacy,document_submission
+Am I scheduled for any tests today,status_query
+Hello I feel very cold and shivering doctor said to report this please.,doctor_query
+Please call the nurse I need some help,nurse_request
+Hi The team has been wonderful thank you I would really appreciate it.,general_conversation
+can you hear me? i need a urine bottle pleae thank you so much.,utility_request
+I do not have much appetite but I should eat something small,nutrition_request
+Can I get something easy to digest,nutrition_request
+There are ants in my room please help,utility_request
+Can you hear me? What time will the scan be done.,status_query
+I had a dream and woke up startled,general_conversation
+Excuse me Can I get my discharge summary please,document_submission
+Hi I would like a second opinion on my condition please.,doctor_query
+I am very scared something is very wrong,emergency
+Sudden numbness in my face and arm,emergency
+Excuse me Please bring the form for blood transfusion consent kindly help.,document_submission
+Can you send the nursing staff please,nurse_request
+Just wanted to say I was given non-veg but I am vegetarian please change is that possible?,nutrition_request
+What time is dinner being served,nutrition_request
+Hi The room is too hot can you adjust the AC is that possible?,utility_request
+My locker key is stuck can someone help,utility_request
+Please Can I ask the doctor about my test results please.,doctor_query
+Can you hear me? I need to fill the admission consent form I would really appreciate it.,document_submission
+Blanket kudungal kulir aagudhu,utility_request
+Hello My gown is wet can nurse help change can you help?,nurse_request
+I am stuck in this position can nurse help,nurse_request
+Just wanted to say Can someone help me with oral care kindly help.,nurse_request
+Just wanted to say I think the baby is coming please help can you help?,emergency
+Hello I need help adjusting my bed position please.,nurse_request
+My phone battery is dead can I get a charger,utility_request
+Hello CareMate,general_conversation
+hi pleae prepare my medical certificate i need it urgently is that possible?,document_submission
+My IV is beeping can nurse come,nurse_request
+What time is my procedure tomorrow,status_query
+Hello What time is my procedure tomorrow is that possible?,status_query
+Um I have a stack of old reports to submit kindly help.,document_submission
+Has the utility team received my request is that possible?,status_query
+I need help washing my face,nurse_request
+Can the doctor review my pain medication,doctor_query
+I need a straw to drink water,utility_request
+I need a bag to put my personal items,utility_request
+Please hurry this is very urgent,emergency
+Excuse me Is my doctor query still pending this is urgent.,status_query
+Please When will I be discharged please ask the doctor I would really appreciate it.,doctor_query
+Is the nurse coming soon I have been waiting,status_query
+Hello Post operation pain is very high please inform doctor can you help?,doctor_query
+Just wanted to say Any update from the doctor on my condition is that possible?,status_query
+I cannot see clearly everything is blurry suddenly,emergency
+Hello Can I have idli or dosa for breakfast I would really appreciate it.,nutrition_request
+Excuse me I submitted a request earlier has anyone seen it thank you so much.,status_query
+Can the nurse check my IV drip,nurse_request
+Please I feel like vomiting but need food what can I eat this is urgent.,nutrition_request
+I am just checking in to say I am fine at the earliest please.,general_conversation
+Can you please send a nurse to my room,nurse_request
+Thank you so much for your help can you help?,general_conversation
+The room is very cold can I get a warm blanket,utility_request
+Excuse me When will my blanket arrive,status_query
+Can you hear me? Very good hospital I will recommend to others kindly help.,general_conversation
+Has my request been received,status_query
+Um I want to talk to a nurse.,nurse_request
+I am nervous about the surgery,general_conversation
+pls i made a request an hour ago is it done i would really appreciate it.,status_query
+Please digitize these old reports,document_submission
+I am not sure if this is normal after surgery,doctor_query
+Please My chest is very tight I can't breathe please.,emergency
+Actually There are ants in my room please help can you help?,utility_request
+I cannot eat heavy food can I get something light,nutrition_request
+My room needs cleaning please,utility_request
+Can I have an extra pillow,utility_request
+Can someone help me with my hearing aid,nurse_request
+I have my ID proof for the records,document_submission
+I am bleeding badly please come,emergency
+Can you hear me? Bahut dard hai please koi aao please.,emergency
+Can I speak to the doctor on duty,doctor_query
+My family wants to know the prognosis please ask,doctor_query
+Has insurance approval come for my treatment,status_query
+Can the cardiologist be called please is that possible?,doctor_query
+Actually Thank you CareMate you are very helpful.,general_conversation
+Hey good night,general_conversation
+Can someone turn on the fan please,utility_request
+Please lower my bed a little,nurse_request
+The drip needle fell out and blood is coming,emergency
+I need a copy of my medical records,document_submission
+This is my first time in a hospital,general_conversation
+I am feeling very weak because I have not eaten,nutrition_request
+Can I get a snack please,nutrition_request
+Please I am diabetic please make sure the food is appropriate can you help?,nutrition_request
+I am very grateful for the support,general_conversation
+I need to use the toilet please help me walk,nurse_request
+Um Can someone empty the dustbin in my room is that possible?,utility_request
+I cut myself and it won't stop bleeding,emergency
+Just wanted to say Can I have a footstool please at the earliest please.,utility_request
+Can I have porridge it is easier to eat,nutrition_request
+Excuse me There is some discharge from the wound thank you.,doctor_query
+I am very hungry can I get something to eat,nutrition_request
+When will I be discharged,status_query
+Please add this diagnosis report to my electronic file,document_submission
+Um I need the curtain closed please can you help?,nurse_request
+Bachao bachao hospital mein koi hai,emergency
+I am feeling very dizzy I might fall,emergency
+Excuse me Can I get extra serving I am still hungry,nutrition_request
+excuse me when will i get my test results at the earliest pleae.,status_query
+can you hear me? my room needs cleaning plz kindly help.,utility_request
+I need help changing my sleeping position,nurse_request
+Severe bleeding from my stomach area,emergency
+Can someone help me with oral care,nurse_request
+Is the ambulance arranged for my discharge can you help?,status_query
+I have the consent form filled out please take it,document_submission
+I am being discharged and I just wanted to thank everyone,general_conversation
+Can someone fix the TV please,utility_request
+Hello Please tell the doctor I need to talk to him thank you so much.,doctor_query
+I cannot eat hard food after surgery please send soft food,nutrition_request
+When is my surgery scheduled,status_query
+Hello Can you check if my MRI report is ready thank you so much.,status_query
+Hives all over and throat tightening,emergency
+I cannot move my left arm or leg,emergency
+Just wanted to say I am very grateful for the support kindly help.,general_conversation
+Is my physiotherapy session today,status_query
+Can I go home today doctor please tell me,doctor_query
+Excuse me I did not get my afternoon snack I would really appreciate it.,nutrition_request
+Just wanted to say I have a concern about the medicine dosage this is urgent.,doctor_query
+The food was very good today thank you,general_conversation
+I feel much better after the treatment today,general_conversation
+Extreme pain I need help right now,emergency
+excuse me can i have idli or dosa for breakfast can you hlep?,nutrition_request
+just wanted to say pls ask the surgeon to come and check my wound i would really appreciate it.,doctor_query
+Excuse me What time is dinner being served thank you.,nutrition_request
+I think I have a fever can nurse check,nurse_request
+Doctor said I can eat now can you send food,nutrition_request
+Can you hear me? Can I get a wheelchair please please.,utility_request
+Excuse me I feel like vomiting but need food what can I eat kindly help.,nutrition_request
+Hi I would like a second opinion on my condition this is urgent.,doctor_query
+I need to speak to the psychiatrist please,doctor_query
+Is there any new information about my treatment,status_query
+Hi Doctor se milna hai mujhe please.,doctor_query
+I am gasping for air please come at the earliest please.,emergency
+Please Can I take this medicine with food or not thank you so much.,doctor_query
+Can you hear me? Nothing urgent just saying hi.,general_conversation
+Can someone bring me a pen and paper,utility_request
+Can the night nurse please check on me,nurse_request
+Um I have handwritten notes from my doctor please scan.,document_submission
+Please I need a straw to drink water at the earliest please.,utility_request
+I want to request a specific meal for tomorrow,nutrition_request
+The monitor alarm is beeping loudly please come,emergency
+Can I get extra serving I am still hungry,nutrition_request
+Actually When is my x-ray result expected is that possible?,status_query
+I fell and I think I hurt my head,emergency
+Excuse me Can someone take my health insurance documents kindly help.,document_submission
+My wound looks a bit red can doctor come check,doctor_query
+Can someone mop the floor there is water,utility_request
+Actually My name is spelled wrong in the records please correct this is urgent.,document_submission
+Never mind I figured it out myself,general_conversation
+Can someone change my pillow cover,utility_request
+Um When will I be discharged kindly help.,status_query
+My bedsheet needs to be changed,utility_request
+I need the curtain closed please,nurse_request
+Hi Can the doctor explain my diagnosis to me thank you so much.,doctor_query
+Please get me some light food,nutrition_request
+I am feeling much better today,general_conversation
+Hi My food has not arrived yet it is very late thank you so much.,nutrition_request
+Can someone take my health insurance documents,document_submission
+I am Muslim can I have halal food only please,nutrition_request
+The room cleaning could be more frequent,general_conversation
+Please I have not eaten since morning can I get food at the earliest please.,nutrition_request
+Can I have my lunch please,nutrition_request
+Can the nurse please come and check on me,nurse_request
+I think my condition is getting worse,doctor_query
+Has the room change been arranged,status_query
+Thanks for everything,general_conversation
+I cannot take this pain anymore,emergency
+Can the admin person come to collect my documents,document_submission
+Hi can you hear me,general_conversation
+Can you hear me? When will I be discharged please ask the doctor can you help?,doctor_query
+Can someone check on my roommate they look unwell,nurse_request
+Has the doctor signed my discharge papers,status_query
+I want to sign the do not resuscitate form please,document_submission
+Just wanted to say I want to say goodbye I am going home today,general_conversation
+I have questions for my doctor,doctor_query
+Can I get a cup or glass please,utility_request
+I have my ECG report from yesterday I would really appreciate it.,document_submission
+I cannot have sugar please check my diet,nutrition_request
+The wifi is not working in my room,utility_request
+actually my family wants to know the prognosis pls ask this is urgent.,doctor_query
+I pressed the button by mistake sorry,general_conversation
+Actually Doctor told me to let them know if I have fever after surgery kindly help.,doctor_query
+The pain is so severe I cannot handle it,emergency
+I felt a little ignored earlier but it is okay now,general_conversation
+Just wanted to say I have some pain can a nurse check on me.,nurse_request
+There is an error in my admission form please fix,document_submission
+Worst pain I have ever felt in my life,emergency
+Excuse me Please check my pulse it feels weird this is urgent.,nurse_request
+Can the cardiologist be called please,doctor_query
+I almost fell out of the bed,emergency
+Hi The food trolley did not come to my room I would really appreciate it.,nutrition_request
+Can you hear me? Thanks for arranging the wheelchair so fast,general_conversation
+Can I know the estimate of my bill so far at the earliest please.,status_query
+I need emergency help right now,emergency
+Please help me sit up in the bed,nurse_request
+Can you hear me? Please digitize these old reports this is urgent.,document_submission
+Please come quickly I need assistance,nurse_request
+Has the doctor seen my report yet,status_query
+Can you hear me? I did not get my afternoon snack.,nutrition_request
+Just wanted to say Can someone give me an update on what is next please.,status_query
+I need to submit my lab test authorization form from the clinic.,document_submission
+Can someone help me fill out the hospital consent form?,document_submission
+My allergy list needs to be updated in the patient file.,document_submission
+Please add my vaccination records to my file.,document_submission
+I have my specialist referral letter please add it to my records.,document_submission
+Can you scan and upload my prescription from the previous hospital?,document_submission
+I need to hand over my advance directive documents to the ward.,document_submission
+Please update my emergency contact details in the system.,document_submission
+I need help turning over in bed my back is hurting.,nurse_request
+Please can someone help me put on my compression stockings.,nurse_request
+Can the nurse check my oxygen levels please.,nurse_request
+I need assistance getting to the bathroom safely.,nurse_request
+Please can someone change my wound dressing it is soaked through.,nurse_request
+Can you tell me when I will be moved to a private room?,status_query
+Has my blood test result come back yet?,status_query
+When is my next ECG scheduled?,status_query
+Is the specialist still coming to see me today?,status_query
+Can you check if my discharge paperwork is ready?,status_query
+What time will the occupational therapist visit me?,status_query
+Can I get an extra pillow for my back please.,utility_request
+The call button light above my bed is not working.,utility_request
+Can someone bring me a spare blanket it is chilly.,utility_request
+I need a bedpan as I cannot walk to the toilet.,utility_request
+Can you adjust the height of my bed please.,utility_request
+Can I ask how long this ward has been open?,general_conversation
+This is my first time in hospital I am feeling a bit nervous.,general_conversation
+I cannot stop shaking and I feel very cold.,emergency
+My vision has gone blurry all of a sudden please help.,emergency
+I just fell out of bed please send someone quickly.,emergency
+I cannot move my left arm suddenly please help.,emergency
+I am having a severe allergic reaction my throat feels tight.,emergency
+I am losing consciousness please help me.,emergency
+Can the doctor explain why I need this new medication?,doctor_query
+I want to ask the doctor about alternative treatments.,doctor_query
+Can someone tell the doctor I have had a reaction to the antibiotic?,doctor_query
+I want a second opinion about my diagnosis can you arrange that?,doctor_query
+Please ask the doctor if I can eat normally before the procedure.,doctor_query
+I need the doctor to review my pain management plan.,doctor_query
+Can the doctor clarify the risks of the surgery I need?,doctor_query
+Has the consultant seen my latest scan results?,doctor_query
+I am vegetarian please make sure my meals do not have meat.,nutrition_request
+Can I get a hot drink with my next meal please.,nutrition_request
+I need a low sodium diet can you update my meal plan?,nutrition_request
+Can I get more protein in my meals to help my recovery?,nutrition_request
