@@ -1,0 +1,1002 @@
+text,label
+The lights are too bright,utility_request
+Do you know any good jokes,general_conversation
+How is the weather today,general_conversation
+Just resting and thinking,general_conversation
+I have extremely high blood pressure symptoms,emergency
+I hit my head very hard,emergency
+Can the doctor tell me when I can resume normal activities,doctor_query
+Good morning,general_conversation
+What is the expected time for my procedure,status_query
+Can I eat now or should I wait,nutrition_request
+The machine says my oxygen is very low,emergency
+I need the doctor to evaluate my symptoms,doctor_query
+Can I have an extra dress please,utility_request
+I cannot stop shaking and feel near death,emergency
+Can the nurse verify my medication dosage,nurse_request
+I miss my dog,general_conversation
+Has the nurse noted my pain level,status_query
+I feel intense sudden pain from head to toe,emergency
+I feel slightly unsteady on my feet,nurse_request
+What is the update on my earlier complaint,status_query
+Can I have some sweet juice immediately,nutrition_request
+I feel okay today,general_conversation
+Can you talk with me for a bit,general_conversation
+Is anyone going to check on my stitches,status_query
+I feel weak due to not eating,nutrition_request
+Can the doctor review my scans with me,doctor_query
+I feel sudden severe neck pain,emergency
+Can I have some glucose biscuits,nutrition_request
+Can you tell me the time please,general_conversation
+I have my MRI report to submit,document_submission
+I need the nurse to give me my medicine,nurse_request
+I want to understand what the biopsy result means,doctor_query
+Can someone reattach my monitor leads,nurse_request
+I am having chest pain,emergency
+I need help managing my pain with the nurse,nurse_request
+Has my prescription been updated,status_query
+Can the doctor tell me what to expect after surgery,doctor_query
+Just wanted to chat,general_conversation
+I need storage space,utility_request
+I feel like collapsing,emergency
+I need a nurse to flush my IV line,nurse_request
+I need help adjusting my position in the bed,nurse_request
+Are you there,general_conversation
+I need the nurse to prepare my next dose,nurse_request
+I think I have broken something,emergency
+Can I get a meal for diabetic patients,nutrition_request
+I want warm water with lemon,nutrition_request
+Can I provide my allergy report,document_submission
+Can I get some magazines to pass time,utility_request
+I think I am going into shock,emergency
+Can a nurse take my weight,nurse_request
+I have a mental health report to hand over,document_submission
+Can I sign and submit the consent document,document_submission
+I feel weak and need someone to assist,nurse_request
+Can I get a straw please,utility_request
+I feel very severe pain in my stomach,emergency
+Can the nurse please take my temperature,nurse_request
+I need the doctor to explain my brain scan,doctor_query
+I need a surface to keep my things,utility_request
+I want to keep my documents in my hospital file,document_submission
+I need to store valuables,utility_request
+Just resting here,general_conversation
+I feel heavy pressure on my chest,emergency
+I have an old prescription to show,document_submission
+Can I have soft diet post surgery,nutrition_request
+Can I get a book or magazine,utility_request
+I have follow-up instructions to add to my file,document_submission
+Is my food order being prepared,status_query
+Can I have a small mirror please,utility_request
+I feel somewhat better today,general_conversation
+I need help with my personal hygiene,nurse_request
+I do not eat meat please give me veg food,nutrition_request
+I am doing fine,general_conversation
+I am gasping for air,emergency
+I need seating for my family,utility_request
+Can we chat,general_conversation
+The nurse needs to check my bandage,nurse_request
+I feel terrible pain in my chest and arm,emergency
+I want a meal review by the dietician,nutrition_request
+Can I give my counselling notes,document_submission
+I think I overdosed on my medicine,emergency
+Can I submit health insurance paperwork,document_submission
+I want Jain food without onion garlic,nutrition_request
+I have concerns about my treatment,doctor_query
+I am thirsty and need water,utility_request
+I feel calm but a little uncertain,general_conversation
+Can I submit my old prescription records,document_submission
+I feel extremely short of breath suddenly,emergency
+Can I have a pair of slippers,utility_request
+Can I get an extra blanket please,utility_request
+I am bored,general_conversation
+Can I have crutches please,utility_request
+I cannot hold anything I feel so weak suddenly,emergency
+Can you read something to me,general_conversation
+I have documents that need to be scanned,document_submission
+Can I get a comb or brush,utility_request
+I feel a little cold but it is manageable,general_conversation
+I want to talk about my day,general_conversation
+Please send nursing staff to room,nurse_request
+Can I have a locker or safe box,utility_request
+I need help turning off the light,nurse_request
+I want a fresh salad,nutrition_request
+I am underweight and need more food,nutrition_request
+When will I know my diagnosis,status_query
+Has surgery been scheduled for me,status_query
+I want to understand all my current medications,doctor_query
+I feel sudden severe weakness in my legs,emergency
+Can I have eggs for breakfast,nutrition_request
+Is the physiotherapist coming today,status_query
+Has my diet been reviewed by the nutritionist,status_query
+I want to write a note,utility_request
+I feel a little foggy today,general_conversation
+My heart stopped for a moment I think,emergency
+I need to sit upright comfortably,utility_request
+Can I get clear broth please,nutrition_request
+Can I get a phone charger,utility_request
+I feel peaceful today,general_conversation
+I need a gluten-free meal,nutrition_request
+I like this room,general_conversation
+Can the doctor visit me for a consultation,doctor_query
+I need someone to assist me,nurse_request
+I need someone to help me move,nurse_request
+Can I get herbal tea please,nutrition_request
+Can I have khichdi please,nutrition_request
+I feel something is not right and need a nurse,nurse_request
+The temperature feels nice,general_conversation
+When will my charger request be fulfilled,status_query
+Can I have an extra chair for my visitor,utility_request
+I am alone and need assistance,nurse_request
+I feel severe cramps throughout my body,emergency
+Can someone hold my hand,nurse_request
+Can I have a meal now,nutrition_request
+Can the doctor explain when I can walk again,doctor_query
+I am barely conscious please help,emergency
+What are the side effects of my medication,doctor_query
+I want dates and nuts,nutrition_request
+I want to hear something positive,general_conversation
+Nothing hurts right now thankfully,general_conversation
+I am feeling restless,general_conversation
+I feel a bit weak but no specific pain,general_conversation
+I want a detailed explanation of my condition,doctor_query
+Can I give my surgery notes to the team,document_submission
+Can I get a warmer blanket,utility_request
+When will the doctor come,general_conversation
+Is the blood test result ready,status_query
+Can the doctor review my ECG reading,doctor_query
+I need fresh hospital wear,utility_request
+I want food without spices,nutrition_request
+I want to transfer my documents electronically,document_submission
+I just want to feel normal again,general_conversation
+What is the update on my blanket request,status_query
+I want to know about the long-term effects of my condition,doctor_query
+I need assistance please,nurse_request
+I have a consent form to fill and give,document_submission
+I slept well last night,general_conversation
+Is the specialist available today,status_query
+I have documents to hand over,document_submission
+Can I submit a power of attorney document,document_submission
+I need the nurse to silence the alarm,nurse_request
+I need a blanket,utility_request
+I need the nurse to check my heartbeat,nurse_request
+The room needs cleaning urgently,utility_request
+Can I hand over my immunization record,document_submission
+When will the nurse come to my room,status_query
+Can the doctor explain why I am on this medication,doctor_query
+I just want to rest for now,general_conversation
+I want to know if tea is okay for me,nutrition_request
+I have a patient rights form to sign and give,document_submission
+I have new test results to add to my chart,document_submission
+Is the specialist appointment confirmed,status_query
+I need more drinking water,utility_request
+Can I update my records with these documents,document_submission
+I have a legal document for the hospital,document_submission
+I need internet connection,utility_request
+I feel uncomfortable please send a nurse,nurse_request
+I am thinking too much,general_conversation
+I am feeling very hungry,nutrition_request
+I cannot swallow and I am gagging,emergency
+Has anyone checked on my previous request,status_query
+I feel hungry,nutrition_request
+My wound is bleeding uncontrollably,emergency
+I feel cold and clammy all over suddenly,emergency
+I feel some burning near my IV site,nurse_request
+Can I get my prescribed diet please,nutrition_request
+I have had no heartbeat for several seconds,emergency
+Can the doctor give me advice about mental health support,doctor_query
+I need help with my morning routine,nurse_request
+Can I have a neck pillow please,utility_request
+Can you play some music for me,general_conversation
+I need halal food please,nutrition_request
+Can I submit my discharge instructions from before,document_submission
+Can I provide my physiotherapy report,document_submission
+What day is it,general_conversation
+I feel somewhat better than yesterday,general_conversation
+Can I give the nurse my reports,document_submission
+I need help with my oxygen mask,nurse_request
+What is happening with my scan appointment,status_query
+Can someone change my bedsheet,nurse_request
+I have sudden severe headache,emergency
+I have an allergic reaction and my throat is swelling,emergency
+Can I provide my X-ray films,document_submission
+I want to submit my vaccination records,document_submission
+I have sudden vision loss in one eye,emergency
+Has anyone followed up on my concern,status_query
+I need someone by my side,nurse_request
+Can I get another pillow,utility_request
+I have a physiotherapy discharge summary to submit,document_submission
+I need a urinal bottle,utility_request
+The drip seems to have stopped,nurse_request
+Is there an update on my test findings,status_query
+I need personal hygiene items,utility_request
+I want to understand what IV fluids I am receiving,doctor_query
+I am doing alright considering everything,general_conversation
+I am a little confused about where I am,general_conversation
+I want a low-sodium meal,nutrition_request
+Can the heater be turned on please,utility_request
+I want to know my dietary restrictions,nutrition_request
+Can I have headphones please,utility_request
+I need someone to help me put on my glasses,nurse_request
+I need help with my catheter,nurse_request
+Please get a nurse urgently,nurse_request
+I want to know my food schedule,nutrition_request
+I want to feel better soon,general_conversation
+Can the doctor explain what the ultrasound showed,doctor_query
+Hello,general_conversation
+What is the status of my bed change request,status_query
+My oxygen tube fell out and I cannot breathe,emergency
+When will the drip be changed,status_query
+I want to hand over my scan reports,document_submission
+I feel tired but rested enough,general_conversation
+I need help logging my fluid intake,nurse_request
+I am doing my best,general_conversation
+Can I submit my insurance documents,document_submission
+I have not eaten since morning,nutrition_request
+Can I get breakfast please,nutrition_request
+I have a sudden high temperature of 40 degrees,emergency
+What is the update on my room change request,status_query
+Can I get fresh bedsheets please,utility_request
+Just trying to relax,general_conversation
+Please let the nurse know I need help,nurse_request
+Can I submit my prior treatment records,document_submission
+Is the ambulance arranged for my transfer,status_query
+Can I get a bag to keep my things,utility_request
+I have referral letters to submit,document_submission
+Can I have moong dal please,nutrition_request
+Can I have lactose-free food please,nutrition_request
+Can I get some food please,nutrition_request
+Can the doctor advise on safe exercises for my condition,doctor_query
+Can I have dinner please,nutrition_request
+Can I have my evening snack now,nutrition_request
+I want some juice,nutrition_request
+Has the room been scheduled for cleaning,status_query
+Please send the ward nurse to my room,nurse_request
+I want to know more about my rehabilitation exercises,doctor_query
+I want to ask the doctor about my vitamin supplements,doctor_query
+Can someone help me fix the pillow,nurse_request
+I need a change of clothes,utility_request
+Can I have a water jug refilled,utility_request
+The bedding needs changing,utility_request
+Is the operation room ready for me,status_query
+I want to hear some good news,general_conversation
+I want to understand what the scan revealed,doctor_query
+I have very rapid irregular heartbeat and feel faint,emergency
+Can I have a food item that helps with recovery,nutrition_request
+Can the doctor go through my medical history with me,doctor_query
+I am vomiting repeatedly and feel very weak,emergency
+Can the doctor tell me about my heart rate trend,doctor_query
+I want to know how long I will be hospitalized,doctor_query
+I am just reflecting on things,general_conversation
+I need the nurse to check my sugar levels,nurse_request
+I feel a sudden electric shock in my chest,emergency
+Can the room be cleaned please,utility_request
+I am just breathing slowly and relaxing,general_conversation
+Can I submit a do not resuscitate form,document_submission
+Is my earlier request still open,status_query
+I want my prescribed nutrition,nutrition_request
+Good night,general_conversation
+I want bread and butter,nutrition_request
+How long will it take for my request to be fulfilled,status_query
+I feel severe pain in my back and chest,emergency
+Is it morning or evening,general_conversation
+Can the doctor come before evening rounds,doctor_query
+I want to know when my next meal is,nutrition_request
+Can I get extension cord please,utility_request
+I want to know what my MRI showed,doctor_query
+I need housekeeping,utility_request
+I wonder when I can go home,general_conversation
+I need help with my nasal cannula,nurse_request
+Has housekeeping been called yet,status_query
+Can someone explain my treatment to me,nurse_request
+Something is seriously wrong please come immediately,emergency
+I cannot see properly suddenly,emergency
+I need assistance adjusting my bed,nurse_request
+I want to go outside for some fresh air,general_conversation
+I feel a little sad but okay,general_conversation
+My nurse call button is not working,utility_request
+I want something rich in calcium,nutrition_request
+I want to know if it is nighttime,general_conversation
+I want to talk to my treating physician,doctor_query
+Can I upload my previous hospital records,document_submission
+Can someone help me sit up,nurse_request
+I want medical advice about my breathing problems,doctor_query
+I want to know about my condition,doctor_query
+Has anyone responded to my earlier call,status_query
+Can the doctor discuss my discharge plan,doctor_query
+I need someone to bring my medication,nurse_request
+Can you talk to me,general_conversation
+The lights are too bright,general_conversation
+I need entertainment,utility_request
+Can the nutritionist adjust my meal plan,nutrition_request
+Emergency please come now,emergency
+I want to digitize my old reports,document_submission
+I have a critical pain in my head,emergency
+I need someone to check my bandage,nurse_request
+I feel a little overwhelmed but okay,general_conversation
+Can I get the TV remote please,utility_request
+I lost track of time,general_conversation
+The heart monitor keeps beeping,nurse_request
+Is the cleaning staff coming today,status_query
+I have questions about my post-surgery care,doctor_query
+Can the doctor answer my questions about my illness,doctor_query
+Can I get earplugs please,utility_request
+Can a nurse check if my wound is healing,nurse_request
+I want some soup please,nutrition_request
+Can the doctor come see me,doctor_query
+Can the doctor explain what is causing my pain,doctor_query
+Can I eat fruits after my medication,nutrition_request
+I want something to read,utility_request
+Can the doctor speak to me before my procedure,doctor_query
+I feel like I am suffocating,emergency
+I had a sudden fall and hit my head,emergency
+Can someone take my pulse please,nurse_request
+I have a very severe headache like never before,emergency
+Can the doctor evaluate if I need more tests,doctor_query
+I have a very serious fall injury,emergency
+I need help reaching something on the table,nurse_request
+I want more food in my meals,nutrition_request
+I need to charge my mobile,utility_request
+I have a photo of my bruise to show,document_submission
+I want coconut water,nutrition_request
+I am shivering and need help,nurse_request
+Please call the duty nurse,nurse_request
+Can I give my expense report,document_submission
+Can I get porridge please,nutrition_request
+Can the doctor explain my allergies to me,doctor_query
+My family called me,general_conversation
+Can I give my blood test results,document_submission
+I need my bedsheet changed,utility_request
+I have very severe abdominal pain suddenly,emergency
+Can I have Ensure or similar supplement,nutrition_request
+I have a digital file to submit,document_submission
+Can the nurse come do a quick check,nurse_request
+I cannot get enough air,emergency
+I am about to faint,emergency
+Can a nurse sit with me for a bit,nurse_request
+Did someone receive my call for help,status_query
+Can I get wifi access please,utility_request
+I am a little bored,general_conversation
+I am losing consciousness,emergency
+I want something easy to digest,nutrition_request
+I have a fever of 104 and feel terrible,emergency
+I need a drinking cup,utility_request
+I want to ask about my chronic pain management,doctor_query
+I feel some pain at the injection site,nurse_request
+Did the doctor get my message,status_query
+Please help me immediately,emergency
+I want to sit up for a while,general_conversation
+I have lab reports from another clinic,document_submission
+Can the nurse look at my arm,nurse_request
+I want lentil soup,nutrition_request
+I feel like I am shutting down completely,emergency
+Can I get a hospital gown please,utility_request
+I feel my sugar dropped,nutrition_request
+Can I listen to some music,general_conversation
+I want to know my calorie target,nutrition_request
+Can I have a clean pillow cover,utility_request
+I am feeling slightly anxious but stable,general_conversation
+I need a medical explanation for my symptoms,doctor_query
+I have my child's vaccination booklet to submit,document_submission
+I want to understand why my blood pressure is high,doctor_query
+I was thinking about my garden,general_conversation
+Can the doctor assess if I am ready for discharge,doctor_query
+I need a fresh towel,utility_request
+I am choking,emergency
+Can someone come to my room,nurse_request
+I need a nurse to help me walk,nurse_request
+I need to use my laptop comfortably,utility_request
+Please send someone to help me,nurse_request
+How are things going,general_conversation
+I need help right now please,nurse_request
+I feel a little unwell and need a nurse,nurse_request
+I want to know about my antibiotic resistance,doctor_query
+What is the latest on my recovery progress,status_query
+What is the progress on my wheelchair request,status_query
+I need assistance with the bed controls,nurse_request
+Can the doctor tell me about my heart condition,doctor_query
+When will someone attend to my request,status_query
+Can the lights be dimmed please,utility_request
+I want to share a PDF of my report,document_submission
+Can I share my records via the hospital system,document_submission
+Can the nurse help me walk to the corridor,nurse_request
+I want to eat something,nutrition_request
+I want upma please,nutrition_request
+Can I get a call bell please,utility_request
+I had a bad dream,general_conversation
+What is happening with my request for blankets,status_query
+The light is disturbing my sleep,utility_request
+Has my X-ray been reviewed,status_query
+I need a mirror to see myself,utility_request
+Can I have a sleep mask please,utility_request
+How long until morning,general_conversation
+Just woke up,general_conversation
+My throat is sore and I want soft diet,nutrition_request
+Can I get a walking stick please,utility_request
+I want to know what the blood test showed,doctor_query
+Hello again,general_conversation
+I want lunch now,nutrition_request
+Can the nurse come check on me,nurse_request
+I feel shaky and need help,nurse_request
+Can I have some tissues please,utility_request
+Can the nurse check on me please,nurse_request
+I feel an explosion of pain in my head,emergency
+Is anyone reviewing my test results,status_query
+I am in agony right now please send someone urgent,emergency
+Can I submit a photograph of my wound,document_submission
+I need warmth for my feet,utility_request
+Is someone going to come and help me,status_query
+I need help turning over,nurse_request
+I cannot breathe,emergency
+I want to know about my fracture healing,doctor_query
+Something is very wrong please help immediately,emergency
+I am starving,nutrition_request
+When will the nurse change my dressing,status_query
+I want to hand over the registration paper,document_submission
+Can someone look at my back please,nurse_request
+I need lumbar support while sitting,utility_request
+I want something for low energy,nutrition_request
+I feel very cold and my heart is beating fast,emergency
+I have sudden loss of feeling in my face,emergency
+Please help me urgently I am not okay,emergency
+I need the nurse to clean my wound,nurse_request
+Can I ask about my nutritional supplements,nutrition_request
+I need assistance using the bedpan,nurse_request
+Not much going on,general_conversation
+Can the doctor come now for a checkup,doctor_query
+Can the doctor explain the risks of my procedure,doctor_query
+I feel okay,general_conversation
+I cannot lift my arm suddenly,emergency
+I am just taking it one day at a time,general_conversation
+I want vitamin C rich food,nutrition_request
+I cannot breathe through my nose or mouth,emergency
+I have a list of my current medicines to give,document_submission
+I need a medical opinion about my symptoms,doctor_query
+Can I have a wheelchair please,utility_request
+I want to discuss my diet with staff,nutrition_request
+I feel okay right now,general_conversation
+I need assistance with my nebulizer,nurse_request
+When can I expect a response to my request,status_query
+I need toiletries,utility_request
+I feel moderately uncomfortable and need nursing help,nurse_request
+My heart is pounding very hard and fast,emergency
+I feel numbness on one side of my body,emergency
+I feel relaxed today,general_conversation
+Has anyone checked on my pending request,status_query
+I am feeling drowsy,general_conversation
+What is your name,general_conversation
+What does my test result mean,doctor_query
+I feel severe kidney pain suddenly,emergency
+I want to ask the doctor about pain management,doctor_query
+Can the doctor tell me about my kidney function results,doctor_query
+I need someone to help with my exercises,nurse_request
+Has the pharmacist been consulted,status_query
+Can the doctor review my prescription list,doctor_query
+I need a nurse right now,nurse_request
+Can I have a USB charger please,utility_request
+Can I get some air conditioning please,utility_request
+I need something cold for swelling,utility_request
+When will housekeeping arrive,status_query
+Can I give the anaesthesia report,document_submission
+I have blood in my urine suddenly and severe pain,emergency
+I cannot speak properly suddenly,emergency
+Can someone help me wash up,nurse_request
+Can you dim the lights please,general_conversation
+I feel paralyzed suddenly,emergency
+I have crushing chest pain radiating to my jaw,emergency
+I need support to walk,utility_request
+I am just passing time,general_conversation
+I want to submit my pharmacy receipts,document_submission
+Can I get toast with honey please,nutrition_request
+I want to hand over documents from another hospital,document_submission
+I want to know why I have been prescribed steroids,doctor_query
+Is my medication ready to be given,status_query
+My body is going completely numb,emergency
+Can I hand over my medication list,document_submission
+What is the status of my discharge papers,status_query
+Can I have a hot water bottle please,utility_request
+I feel a little out of it today,general_conversation
+I feel extremely ill suddenly please come now,emergency
+Has my family been informed about my condition,status_query
+Can I give the billing team my documents,document_submission
+I feel I am about to lose consciousness right now,emergency
+Can I change my meal timing,nutrition_request
+Can I have something light to eat,nutrition_request
+Can I provide my post-operative instructions,document_submission
+I need a nurse for assistance,nurse_request
+Nice to meet you,general_conversation
+Can I get liquid food please,nutrition_request
+I feel sudden severe pressure behind my eyes,emergency
+Can someone adjust my pillow,nurse_request
+I need more pillows,utility_request
+I need bathroom assistance equipment,utility_request
+I need help getting out of bed,nurse_request
+I want to know if the treatment is working,doctor_query
+Can I get the room temperature adjusted,utility_request
+I have doubts about my prescribed medicines,doctor_query
+Can the doctor clarify my dietary restrictions,doctor_query
+Can I get enough food portions,nutrition_request
+Is the doctor aware I am waiting,status_query
+Can I upload a picture of my rash,document_submission
+Can I submit my psychological evaluation,document_submission
+Has the doctor seen my report yet,status_query
+Can the fan be turned on please,utility_request
+Can I get a side table please,utility_request
+I want to submit my social worker's assessment,document_submission
+Please help me it is a real emergency,emergency
+I miss being home,general_conversation
+Can you cheer me up,general_conversation
+I feel freezing in this room,utility_request
+I want a second opinion from the doctor,doctor_query
+Just checking in,general_conversation
+Can I give my birth certificate for records,document_submission
+I want to give the speech therapy notes,document_submission
+I need help pressing the call button,nurse_request
+Can I submit a complaint in writing,document_submission
+Can the window be closed please,utility_request
+I feel intense burning pain in my chest,emergency
+I am okay for now,general_conversation
+Has the system logged my request,status_query
+I feel peaceful at the moment,general_conversation
+I want to know my cholesterol results,doctor_query
+Can I submit my occupational therapy report,document_submission
+Can someone come here please,nurse_request
+Can the doctor discuss my liver results,doctor_query
+Can I have stationery to write,utility_request
+Can the doctor advise me about my diet with this condition,doctor_query
+I have extreme dizziness suddenly,emergency
+I need the doctor to address my family's concerns,doctor_query
+I am having a seizure,emergency
+Just wanted to say hello,general_conversation
+Can I have a laptop stand,utility_request
+Can I get some hot soup,nutrition_request
+I want to drink something warm,nutrition_request
+Can I hand over my insurance card,document_submission
+I was thinking about my family,general_conversation
+Can the TV be switched on please,utility_request
+Can I get some rice and curry,nutrition_request
+I feel confused and need someone here,nurse_request
+Hi,general_conversation
+I want some cooked vegetables,nutrition_request
+I need help pressing the nurse call button,nurse_request
+Can I avoid peanuts in my food,nutrition_request
+I want to ask about my physiotherapy plan,doctor_query
+I need thicker bedding,utility_request
+I need a cane to walk,utility_request
+Can I have a high protein meal,nutrition_request
+Tell me a joke,general_conversation
+I think my IV has come loose,nurse_request
+My heart monitor is alarming loudly,emergency
+I need someone to check if my temperature is okay,nurse_request
+Please send a caretaker,nurse_request
+I feel comfortable in this bed,general_conversation
+Has linen service been called,status_query
+Can I get a towel please,utility_request
+Can the doctor tell me what caused my infection,doctor_query
+I am grateful to be here,general_conversation
+Can I get my protein supplement,nutrition_request
+Can you call someone to see me,nurse_request
+Can I hand over my medical certificate,document_submission
+The bandage feels too tight,nurse_request
+Tell me something nice,general_conversation
+I want to submit identity documents,document_submission
+Can I get a second serving please,nutrition_request
+My phone battery is dead and I need a charger,utility_request
+I need assistance with my eye drops,nurse_request
+Can I have fruit please,nutrition_request
+Can I get an ice pack please,utility_request
+Can the doctor explain my wound care instructions,doctor_query
+Can I update my next of kin information,document_submission
+I have severe breathing difficulty,emergency
+Can a cardiologist come see me,doctor_query
+Can I get idli and sambar,nutrition_request
+Can someone check why the machine is beeping,nurse_request
+I want a full explanation of my treatment,doctor_query
+I want to know if my diabetes is under control,doctor_query
+I have very high fever and I am shaking,emergency
+Can I give my admission form,document_submission
+My face feels drooping on one side,emergency
+Please call a staff member to my bed,nurse_request
+I have questions about my neurological condition,doctor_query
+I need footwear inside the room,utility_request
+I am on a diet but feel hungry,nutrition_request
+Can the doctor advise me on smoking cessation,doctor_query
+I want to speak to a specialist about my condition,doctor_query
+What is the status of my nurse request,status_query
+What is the status of my earlier nurse call,status_query
+The nurse should check my medication time,nurse_request
+Can I get a diabetic-friendly meal,nutrition_request
+I cannot keep my eyes open and feel very faint,emergency
+I need a nurse to reposition me,nurse_request
+I have a query about my insulin dosage,doctor_query
+Can I have orange or lemon please,nutrition_request
+I cannot sleep,general_conversation
+I am feeling mildly uncomfortable but nothing serious,general_conversation
+I need a straw to drink,utility_request
+I want to know if my fever has a specific cause,doctor_query
+Is there any update on my IV change,status_query
+Can someone help me lie down slowly,nurse_request
+I took the wrong medicine,emergency
+I want to watch television,utility_request
+I want to know the name of my disease,doctor_query
+The room is too cold,utility_request
+Can I get buttermilk please,nutrition_request
+I cannot feel my left arm,emergency
+Someone needs to check my wound,nurse_request
+Can a nurse check the IV insertion point,nurse_request
+Has anyone looked into my complaint,status_query
+I want to give a written feedback form,document_submission
+I feel a bit of discomfort but it is manageable,general_conversation
+I cannot move my body,emergency
+I have medical questions for the doctor,doctor_query
+Can I hand over my medical history file,document_submission
+I have a question about my diagnosis,doctor_query
+Can you keep me company,general_conversation
+What time is my procedure scheduled,status_query
+Is anyone coming to my room,status_query
+I do not feel like talking much today,general_conversation
+Just woke up from a nap,general_conversation
+I want to hand over my dietician's report,document_submission
+I want to speak with the doctor,doctor_query
+Can I have curd rice please,nutrition_request
+I feel nausea and severe chest tightness,emergency
+Can you explain my treatment plan,doctor_query
+I cannot focus on anything,general_conversation
+Has the request been approved,status_query
+Can the nurse come soon please,nurse_request
+When will the dietician visit me,status_query
+Can someone help me reach the remote,nurse_request
+Can I give you my prescription,document_submission
+Can I send a scan of my document,document_submission
+I feel slightly cold,general_conversation
+I feel a bit groggy,general_conversation
+I want to submit my medical report,document_submission
+I need a wheelchair to move around,utility_request
+Can I submit my prescription list,document_submission
+Can the water pitcher be brought,utility_request
+How are you,general_conversation
+I think I am having a heart attack,emergency
+I am just lying here,general_conversation
+I need assistance with my drip,nurse_request
+I want to discuss my treatment goals with the doctor,doctor_query
+I want to submit my emergency contact details,document_submission
+Can I give my dental records,document_submission
+I cannot move my fingers suddenly,emergency
+I want some boiled vegetables,nutrition_request
+Can I have some yogurt please,nutrition_request
+When is my next physiotherapy session,status_query
+I need a nurse to check my drip rate,nurse_request
+I want to ask the doctor about my prognosis,doctor_query
+Can I email my reports,document_submission
+I am craving something sweet,nutrition_request
+I feel dizzy and need assistance,nurse_request
+I want fresh air in the room,utility_request
+Can you ask the doctor to visit me today,doctor_query
+How long have I been here,general_conversation
+I want to submit a letter from my previous doctor,document_submission
+I want biscuits and tea,nutrition_request
+Can the doctor give me an update on my recovery,doctor_query
+Has my discharge been processed,status_query
+Is the equipment I asked for available,status_query
+Can someone read my chart,nurse_request
+I want chapati and dal,nutrition_request
+Has the pharmacy sent my medicine,status_query
+I want to watch some TV,general_conversation
+I need the nurse to check for bed sores,nurse_request
+I need a pen and paper,utility_request
+Can the doctor update my family about my progress,doctor_query
+Can the doctor provide me a written summary of my diagnosis,doctor_query
+I want the doctor to reassess my pain medication,doctor_query
+Can you please call the nurse,nurse_request
+Can I have wet wipes please,utility_request
+I want a small snack,nutrition_request
+I feel a mild headache but nothing major,general_conversation
+It is hot and I need the fan,utility_request
+I need the nurse to monitor my vitals,nurse_request
+Can you ring the nurse bell for me,nurse_request
+I need a nurse to check my blood pressure,nurse_request
+Can I get food that suits my religion,nutrition_request
+Can someone hold my arm while I walk,nurse_request
+I want to know my recovery timeline,doctor_query
+Any news today,general_conversation
+I want some noodles,nutrition_request
+Can the doctor give me information about my tumour,doctor_query
+Can the doctor explain what happens during my procedure,doctor_query
+Can the doctor advise on my respiratory condition,doctor_query
+Can you tell me a story,general_conversation
+Can I submit my surgical history,document_submission
+When is my next checkup,status_query
+Is there anyone available to assist me,status_query
+Can I have a reclining pillow please,utility_request
+The TV remote is broken,utility_request
+I need the nurse for medication timing,nurse_request
+I am having trouble breathing slightly,nurse_request
+I cannot breathe at all,emergency
+I feel intense pressure in my chest,emergency
+Please someone help me urgently,emergency
+I am not feeling well enough to call,nurse_request
+I want food rich in iron,nutrition_request
+I want to know about my rehabilitation plan,doctor_query
+Can I get vegetarian food,nutrition_request
+Can I submit reports from a private lab,document_submission
+What is the status of my medication review,status_query
+Has the doctor been informed about my query,status_query
+I feel uncomfortable lying down,nurse_request
+My blood pressure feels very low,emergency
+Can you scan this document for my records,document_submission
+Has my request been received,status_query
+I want to provide images of my injury,document_submission
+I want to ask about the medication schedule,doctor_query
+I am resting comfortably,general_conversation
+I am bleeding heavily,emergency
+Can the doctor address my concerns about surgery,doctor_query
+I miss my family,general_conversation
+I was daydreaming,general_conversation
+I need help with my socks and slippers,nurse_request
+Can the doctor tell me about my nerve damage,doctor_query
+Can I have warm milk please,nutrition_request
+I want to talk to someone,general_conversation
+Can I request a custom meal,nutrition_request
+I am allergic to seafood,nutrition_request
+The room is too hot,utility_request
+Has my transfer to another ward been processed,status_query
+I feel calm today,general_conversation
+Can I have soft food please,nutrition_request
+What is the delay for my wheelchair,status_query
+Is there any news about my treatment,status_query
+I need a nurse for moral support,nurse_request
+Can the doctor clarify the procedure I will undergo,doctor_query
+Can I give a digital copy of my scan,document_submission
+Thank you for checking on me,general_conversation
+Good afternoon,general_conversation
+I am at peace right now,general_conversation
+When will the test results be back,status_query
+My oxygen feels very low,emergency
+Is anyone working on my request,status_query
+I have the claim form to submit,document_submission
+I want to submit my pre-operative documents,document_submission
+I need more plug points,utility_request
+I want to add documents to my patient file,document_submission
+Can I get extra food today please,nutrition_request
+What is the current status of everything I requested,status_query
+I need hand sanitizer,utility_request
+I feel somewhat tired today but nothing is wrong,general_conversation
+Tell me about the weather outside,general_conversation
+I feel a bit down,general_conversation
+Can I have a commode please,utility_request
+Can the doctor speak to my spouse as well,doctor_query
+I have a document for billing department,document_submission
+I feel tired but nothing specific is wrong,general_conversation
+I want to hand over my advance directive,document_submission
+I want to eat something healthy,nutrition_request
+Is my request being processed,status_query
+Can I get a sandwich please,nutrition_request
+I need the nurse to check my stitches,nurse_request
+Can the window be opened please,utility_request
+I feel a bit homesick,general_conversation
+I have a folder of medical records to submit,document_submission
+I need to understand my oxygen therapy,doctor_query
+Not in pain just tired,general_conversation
+I am coughing up blood,emergency
+Has anyone confirmed my appointment,status_query
+Can you get the nurse for me,nurse_request
+Has the doctor reviewed my latest results,status_query
+Help me I am vomiting blood,emergency
+I want to understand my medical report,doctor_query
+I want to ask about stopping one of my medications,doctor_query
+Can someone apply my cream,nurse_request
+I want to know about my diet plan,nutrition_request
+I want to submit my eye test report,document_submission
+Please send someone to check on me,nurse_request
+I need the nurse to explain my medications,nurse_request
+I need a tissue box,utility_request
+Can the doctor explain the procedure to me,doctor_query
+I am just waiting,general_conversation
+Can I get milk based food please,nutrition_request
+I am counting the days until I go home,general_conversation
+Has physiotherapy been booked for me,status_query
+I have a burst of intense pain in my abdomen,emergency
+Good evening,general_conversation
+What is the wait time for a nurse,status_query
+I want to speak to the oncologist,doctor_query
+Can I have a cup for water please,utility_request
+I want a nutritious meal,nutrition_request
+When will my report come,status_query
+Can I have steamed food please,nutrition_request
+What is the current status of my complaint,status_query
+There is too much draft,utility_request
+I am thinking about my friends,general_conversation
+Has the meal been ordered for me,status_query
+I feel cold and need a blanket,utility_request
+I am having difficulty speaking suddenly,emergency
+When will my meal be served,status_query
+Can the doctor help me understand my ICU transfer,doctor_query
+I want to submit consent forms,document_submission
+Can a nurse help me change position,nurse_request
+What happened to my request from this morning,status_query
+I feel extreme pain everywhere,emergency
+I feel a little anxious but okay,general_conversation
+Is the staff aware of all my needs,status_query
+I have my ECG to submit,document_submission
+I am feeling tired but okay,general_conversation
+I have severe stomach cramps and blood in stool,emergency
+I feel a bit emotional today,general_conversation
+Nothing much happening,general_conversation
+I had visitors earlier,general_conversation
+I need a tray to eat from,utility_request
+I am hungry and want something to eat,nutrition_request
+I am feeling a little impatient,general_conversation
+I am shaking uncontrollably and feel very weak,emergency
+I think I am having a stroke,emergency
+Can someone assist me in the bathroom,nurse_request
+Is the nutritionist reviewing my diet,status_query
+I need a toothbrush and toothpaste,utility_request
+I am feeling a bit nervous about my test tomorrow,general_conversation
+Can you request the nurse to visit,nurse_request
+I am feeling okay today,general_conversation
+What time is it,general_conversation
+I want to know what I can eat after surgery,nutrition_request
+Tell me something interesting,general_conversation
+I enjoy talking to you,general_conversation
+I need neck support,utility_request
+Can you close the window please,general_conversation
+I have a file with my medical documents,document_submission
+I need help sitting on the edge of the bed,nurse_request
+Is there any news from the lab,status_query
+I cannot breathe and my lips feel blue,emergency
+Can I provide my doctor's referral,document_submission
+Can I give a physical document to be digitized,document_submission
+Please ask someone to visit me,nurse_request
+I feel lonely,general_conversation
+I want boiled chicken soup,nutrition_request
+I have a sharp stabbing pain in my chest,emergency
+I want to know my surgery risk assessment,doctor_query
+I need nursing assistance,nurse_request
+Can I have a replacement remote,utility_request
+Can you call for help please,nurse_request
+My chest is crushing me,emergency
+I have my discharge summary to submit,document_submission
+I have my test reports here,document_submission
+I feel a little off today and want a nurse to see me,nurse_request
+I want to know if my condition is serious,doctor_query
+Has the wound care team been informed,status_query
+Can the doctor discuss pain relief alternatives,doctor_query
+I want to know if my symptoms are normal for recovery,doctor_query
+I have a deep cut that is bleeding fast,emergency
+I feel nauseous and need help,nurse_request
+Can the doctor look at my wound and advise,doctor_query
+Can I have soap please,utility_request
+Can I get a snack please,nutrition_request
+Is anyone aware of my situation,status_query
+Can the doctor explain when I can eat normally again,doctor_query
+I need help getting up from the bed,nurse_request
+Can I get a high calorie diet,nutrition_request
+I fell down from the bed,emergency
+I need earphones to listen to something,utility_request
+I missed my last meal,nutrition_request
+Can the doctor tell me about alternative treatments,doctor_query
+Help me I am dying,emergency
+Hi there,general_conversation
+Has the nurse been informed yet,status_query
+I am having a panic attack and cannot breathe,emergency
+Can you get a staff member,nurse_request
+I am sweating heavily and feel faint,emergency
+I want oats in the morning,nutrition_request
+Can the doctor tell me about my surgery,doctor_query
+Something ruptured inside I think,emergency
+I feel something is very wrong with my heart,emergency
+Can the doctor arrange a specialist consultation,doctor_query
+I cannot control my limbs,emergency
+Can the doctor explain my blood report,doctor_query
+I am awake now,general_conversation
+I feel a bit sleepy,general_conversation
+I cannot open my eyes properly,emergency
+It is too noisy and I cannot sleep,utility_request
+Can I drink coffee during my treatment,nutrition_request
+I am thinking of happy things,general_conversation
+I am hungry for something warm,nutrition_request
+Did anyone see my earlier request,status_query
+Has my concern been escalated,status_query
+I have severe chest pain right now,emergency
+I have my operative notes to hand over,document_submission
+Can someone help me with my IV drip,nurse_request
+My heart is racing very fast,emergency
+Can I get a meal tray please,utility_request
+I want to provide a list of my previous surgeries,document_submission
+Can I submit the file to the records team,document_submission
+Can I have a banana and some milk,nutrition_request
+Can I have vegetarian only meals,nutrition_request
+I want my prescribed nutritional drink,nutrition_request
+Can I get something for my low blood sugar,nutrition_request
+Can the doctor review my treatment response,doctor_query
+Can I give a full medical history document,document_submission
+Can a nurse check my oxygen levels,nurse_request
+Can we have a conversation,general_conversation
+I have a fitness certificate to submit,document_submission
+Can I get toilet paper please,utility_request
+Can I get a bedpan please,utility_request
+Can I get food good for wound healing,nutrition_request
+Can I get food earlier today please,nutrition_request
+Can I have a warm blanket,utility_request
+Can I have some sprouts,nutrition_request
+I need a nurse to change my dressing,nurse_request
+What does the doctor say about my condition,doctor_query
+I feel a little sad,general_conversation
+Can I get fiber-rich food please,nutrition_request
+I need someone to accompany me to the bathroom,nurse_request
+Is the medicine on its way,status_query
+Can the doctor come and speak with me personally,doctor_query
+Please call a doctor immediately it is very serious,emergency
+I need help reaching the water jug,nurse_request
+Can someone clean my room,utility_request
+I want to know about complications to watch for,doctor_query
+What happened to my food request,status_query
+Has the supervisor been notified,status_query
+I am thinking about my pet,general_conversation
+I feel faint and need support,nurse_request
+Did my meal request go through,status_query
+When will I get my next pain medication,status_query
+I feel like I am going to die,emergency
+I want to discuss my recovery plan with the doctor,doctor_query
+Can I get a back support cushion,utility_request
+I have food allergies please check,nutrition_request
+Can I give my nutritional assessment,document_submission
+What medication am I taking and why,doctor_query
+I want to understand my antibiotics course,doctor_query
+Can I get a writing pad please,utility_request
+I want to watch the news,utility_request
+Is my care plan being updated,status_query
+Just need some company,general_conversation
+Can someone loosen my dressing please,nurse_request
+Please call someone to my bedside,nurse_request
+I need help adjusting my support pillow,nurse_request
+I need help cleaning up please,nurse_request
+Can the doctor explain what my diagnosis means,doctor_query
+I want to hand over all my old reports together,document_submission
+Is the doctor coming to see me today,status_query
+I want a blanket,utility_request
+I want some blankets,utility_request
+I want an extra blanket,utility_request
+I want a warm blanket,utility_request
+I want a pillow,utility_request
+I want the fan on,utility_request
+I want a wheelchair,utility_request
+I want a charger,utility_request
+I want the lights off,utility_request
+I want clean sheets,utility_request
+I want a towel,utility_request
+I want a comb,utility_request
+I want some tissues,utility_request
+I want slippers,utility_request
+I want a TV remote,utility_request
+I want the curtains closed,utility_request
+I want more water in my jug,utility_request
+I want my bed adjusted,utility_request
+I want my room cleaned,utility_request
+I want a walking stick,utility_request
+I want some food,nutrition_request
+I want a meal,nutrition_request
+I want something to eat,nutrition_request
+I want juice,nutrition_request
+I want warm milk,nutrition_request
+I want tea,nutrition_request
+I want biscuits,nutrition_request
+I want fruits,nutrition_request
+I want dal and rice,nutrition_request
+I want my diet meal,nutrition_request
+I feel tired,general_conversation
+I am tired,general_conversation
+I feel exhausted,general_conversation
+I feel a bit tired,general_conversation
+I am feeling very tired,general_conversation
+I feel fatigued,general_conversation
+I feel drowsy,general_conversation
+I am sleepy,general_conversation
+I feel weak but okay,general_conversation
+I have sudden chest pain,emergency
+Severe chest pain right now,emergency
+I cannot breathe at all,emergency
+I am losing consciousness,emergency
+My heart is beating very irregularly,emergency
+I feel extreme sudden weakness,emergency
+I think I am having a stroke,emergency

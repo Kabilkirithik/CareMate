@@ -1,0 +1,93 @@
+process_patient_speech:
+  description: >
+    Process patient speech input: {speech_text} from patient {patient_id} in bed {bed_id}.
+    
+    CRITICAL WORKFLOW:
+    1. EMERGENCY DETECTION (HIGHEST PRIORITY):
+       - Use emergency_precheck to detect emergencies in speech
+       - If emergency detected, immediately delegate to emergency_response_agent
+       - Continue with intent processing regardless of emergency status
+    
+    2. INTENT CLASSIFICATION:
+       - Use IntentRoutingTool to classify patient intent
+       - Determine if response should be local or delegated
+    
+    3. RESPONSE ROUTING:
+       - CASUAL_CHAT: Provide local friendly response
+       - Other intents: Delegate to central_orchestration_agent
+    
+    4. LOGGING:
+       - Log all interactions for audit trail
+    
+    Expected output: Complete interaction result with emergency status, intent, and response.
+  expected_output: >
+    A comprehensive interaction result containing:
+    - Emergency detection status and severity
+    - Intent classification and confidence
+    - Response type (local/delegated)
+    - Patient response or delegation details
+    - Processing metrics and timestamps
+  agent: patient_interaction_agent
+
+handle_emergency_alert:
+  description: >
+    Handle critical emergency for patient {patient_id} in bed {bed_id} with severity {severity} and reason {reason}.
+    
+    IMMEDIATE ACTIONS REQUIRED:
+    1. Use EmergencyDetectionTool to send alerts to nurse and doctor dashboards
+    2. Log emergency event in patient timeline
+    3. Return confirmation of alert dispatch
+    
+    This is a CRITICAL SAFETY task - execute immediately without delay.
+  expected_output: >
+    Emergency alert confirmation with:
+    - Alert dispatch status
+    - Notification targets (nurse/doctor dashboards)
+    - Emergency event logging confirmation
+    - Timestamp and severity level
+  agent: emergency_response_agent
+
+orchestrate_patient_request:
+  description: >
+    Orchestrate complex patient request: {request_type} from patient {patient_id}.
+    Original speech: {speech_text}
+    Request metadata: {metadata}
+    
+    WORKFLOW STEPS:
+    1. Use PatientDetailsTool to gather patient context
+    2. Analyze request type and determine appropriate workflow
+    3. Generate staff notifications based on request type:
+       - NURSE_REQUEST: Notify nursing staff with urgency assessment
+       - DOCTOR_QUERY: Create medical consultation request
+       - NUTRITION_REQUEST: Coordinate with nutrition team
+       - UTILITY_REQUEST: Generate facility service request
+       - STATUS_QUERY: Provide real-time status update
+    4. Create structured response for patient
+    5. Log workflow completion
+  expected_output: >
+    Complete orchestration result with:
+    - Workflow type and execution steps
+    - Staff notifications generated
+    - Patient response message
+    - Estimated completion time
+    - Request tracking information
+  agent: central_orchestration_agent
+
+gather_patient_context:
+  description: >
+    Gather comprehensive patient context for patient {patient_id} with action {action}.
+    
+    Use PatientDetailsTool to retrieve:
+    - Basic patient information
+    - Active visit details
+    - Recent timeline events
+    - Complete summary data as needed
+    
+    Provide structured context for decision-making.
+  expected_output: >
+    Structured patient context containing:
+    - Patient demographics and basic info
+    - Current visit status and details
+    - Recent events and timeline
+    - Relevant medical context
+  agent: patient_context_agent

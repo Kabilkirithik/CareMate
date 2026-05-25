@@ -1,0 +1,177 @@
+text,label
+I cannot breathe properly,emergency
+I feel severe chest pain,emergency
+I am having difficulty breathing,emergency
+Please help me immediately,emergency
+I feel like I might faint,emergency
+My chest hurts badly,emergency
+I feel very dizzy and weak,emergency
+Something is wrong with my breathing,emergency
+I feel sudden pain in my chest,emergency
+I am struggling to breathe,emergency
+My heart is beating very fast,emergency
+I feel like I might collapse,emergency
+I cannot catch my breath,emergency
+Please help I feel very unwell,emergency
+I am feeling extremely weak suddenly,emergency
+I feel like I might lose consciousness,emergency
+My chest feels tight and painful,emergency
+I feel severe pain in my body,emergency
+I think I am going to faint,emergency
+Please send help immediately,emergency
+
+
+Please call the nurse,nurse_request
+I need help getting up,nurse_request
+Can a nurse come here,nurse_request
+I need assistance please,nurse_request
+Please send a nurse to my room,nurse_request
+I need help adjusting my bed,nurse_request
+Could someone help me sit up,nurse_request
+I need help moving,nurse_request
+Please ask the nurse to come,nurse_request
+I need help with my IV,nurse_request
+I need someone to assist me,nurse_request
+Can the nurse check on me,nurse_request
+Please help me with my pillow,nurse_request
+I need help turning in bed,nurse_request
+Could the nurse come here,nurse_request
+I need assistance with the bed controls,nurse_request
+Can someone help me stand,nurse_request
+Please send a nurse for assistance,nurse_request
+I need help sitting properly,nurse_request
+I need support getting out of bed,nurse_request
+
+
+When will the doctor visit me,doctor_query
+Can I speak with the doctor,doctor_query
+I want to talk to the doctor,doctor_query
+When is the doctor coming,doctor_query
+Can the doctor check my condition,doctor_query
+I would like to ask the doctor something,doctor_query
+Please inform the doctor I have a question,doctor_query
+Can I consult the doctor,doctor_query
+I need to discuss my symptoms with the doctor,doctor_query
+Can the doctor review my reports,doctor_query
+When can the doctor see me,doctor_query
+Please let the doctor know I have a concern,doctor_query
+I want to ask the doctor about my treatment,doctor_query
+Could the doctor visit my room,doctor_query
+I have a question for the doctor,doctor_query
+Please arrange a doctor consultation,doctor_query
+Can the doctor examine me today,doctor_query
+I want the doctor to check my reports,doctor_query
+I need clarification from the doctor,doctor_query
+Please call the doctor for me,doctor_query
+
+
+I want breakfast,nutrition_request
+Can I get lunch,nutrition_request
+I would like dinner,nutrition_request
+Can I order food,nutrition_request
+I feel hungry,nutrition_request
+Can I get something to eat,nutrition_request
+Please bring my meal,nutrition_request
+I want a meal please,nutrition_request
+Can I have my dinner now,nutrition_request
+Please arrange breakfast,nutrition_request
+I would like a snack,nutrition_request
+Can I have some food,nutrition_request
+Please bring lunch for me,nutrition_request
+I would like my meal tray,nutrition_request
+Can I get dinner served,nutrition_request
+I want to request food,nutrition_request
+Please send my meal,nutrition_request
+Can I have something light to eat,nutrition_request
+I want my breakfast now,nutrition_request
+Please arrange dinner for me,nutrition_request
+
+
+I need a blanket,utility_request
+Can I get an extra pillow,utility_request
+Please bring a charger,utility_request
+I need a wheelchair,utility_request
+Please send housekeeping,utility_request
+I need an extra bedsheet,utility_request
+Can I get another pillow,utility_request
+Please bring a blanket for me,utility_request
+I need help with the room cleaning,utility_request
+Can I get a phone charger,utility_request
+I need a wheelchair to move,utility_request
+Please bring an extra blanket,utility_request
+Could someone clean my room,utility_request
+I need a pillow please,utility_request
+Please send housekeeping staff,utility_request
+I need a charger for my phone,utility_request
+Please bring a fresh bedsheet,utility_request
+Can someone bring me a blanket,utility_request
+I need housekeeping assistance,utility_request
+Please arrange a wheelchair,utility_request
+
+
+What is the status of my request,status_query
+Has the nurse been assigned,status_query
+Is my food approved,status_query
+Did someone come for my request,status_query
+What happened to my request,status_query
+Has my meal been approved,status_query
+Is the nurse coming,status_query
+What is happening with my request,status_query
+Did housekeeping accept my request,status_query
+Has the doctor responded,status_query
+Is my request still pending,status_query
+Has someone been assigned to help me,status_query
+What is the progress of my request,status_query
+Did anyone check my request,status_query
+Is my food request approved,status_query
+When will my request be completed,status_query
+Is there an update on my request,status_query
+Did the nurse receive my request,status_query
+Has my request been processed,status_query
+Can you check my request status,status_query
+
+
+Please scan this report,document_submission
+Upload this medical report,document_submission
+Digitize this prescription,document_submission
+Please scan this document,document_submission
+I want to upload my medical report,document_submission
+Please digitize this report,document_submission
+Scan this hospital document,document_submission
+Please upload this prescription,document_submission
+Can you scan my report,document_submission
+I want this document digitized,document_submission
+Please process this medical record,document_submission
+Upload this hospital document,document_submission
+Digitize this test report,document_submission
+Please scan my medical paper,document_submission
+Can you upload this report,document_submission
+Please convert this report to digital format,document_submission
+I want to submit this report,document_submission
+Please scan my prescription,document_submission
+Upload this medical document,document_submission
+Please digitize this hospital report,document_submission
+
+
+How are you today,general_conversation
+What time is it,general_conversation
+Tell me a joke,general_conversation
+I feel bored,general_conversation
+Can we talk for a while,general_conversation
+What is the weather today,general_conversation
+Can you keep me company,general_conversation
+Tell me something interesting,general_conversation
+I want to chat,general_conversation
+How is your day going,general_conversation
+Can you tell me a story,general_conversation
+I am feeling lonely,general_conversation
+Can you entertain me,general_conversation
+Let's talk,general_conversation
+Tell me something funny,general_conversation
+Can we have a conversation,general_conversation
+What can you do,general_conversation
+Do you know any stories,general_conversation
+Can you chat with me,general_conversation
+I want to talk,general_conversation
+
+
