@@ -62,7 +62,7 @@ def clean_text(text):
     return normalized.encode('ascii', 'ignore').decode('ascii')
 
 def generate_pdf(patient_name, patient_id, report_info):
-    reports_dir = os.path.join("Vfinal", "patient_reports")
+    reports_dir = os.path.join("patient_reports")
     os.makedirs(reports_dir, exist_ok=True)
     
     patient_name = clean_text(patient_name)

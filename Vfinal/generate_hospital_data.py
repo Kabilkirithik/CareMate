@@ -390,7 +390,7 @@ class HospitalDataGenerator:
 
     def _generate_report_pdf(self, doc_id, doc_type, patient_name, patient_id):
         """Generates a professional-looking medical report PDF."""
-        reports_dir = os.path.join("Vfinal", "patient_reports")
+        reports_dir = os.path.join("patient_reports")
         os.makedirs(reports_dir, exist_ok=True)
         
         file_name = f"{doc_type}_{doc_id}.pdf"

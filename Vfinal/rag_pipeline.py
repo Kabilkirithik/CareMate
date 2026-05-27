@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = "caremate_db"
-CHROMA_PATH = os.path.join("Vfinal", "chroma_db")
-REPORTS_DIR = os.path.join("Vfinal", "patient_reports")
+CHROMA_PATH = os.path.join("chroma_db")
+REPORTS_DIR = os.path.join("patient_reports")
 
 class CareMateRAG:
     def __init__(self):
