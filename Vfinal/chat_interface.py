@@ -3,6 +3,7 @@ import os
 import requests
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from datetime import datetime
 import time
 
 load_dotenv()
@@ -29,39 +30,78 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 if "patient_id" not in st.session_state:
     st.session_state.patient_id = None
+if "patient_name" not in st.session_state:
+    st.session_state.patient_name = None
+if "last_checked" not in st.session_state:
+    st.session_state.last_checked = datetime.now()
+
+# --- Bedside Device Logic: Listen for Doctor ---
+def check_for_doctor_messages():
+    """Polls the interaction DB for new messages from the doctor dashboard."""
+    try:
+        client = MongoClient("mongodb+srv://Caremate-frontend:FIOWipLqLhFyp4uP@cluster0.agxm8kg.mongodb.net/?appName=Cluster0")
+        db = client["caremate_interaction_db"]
+        
+        new_msg = db.doctor_messages.find_one({
+            "patient_id": st.session_state.patient_id,
+            "played": False
+        }, sort=[("sent_at", -1)])
+        
+        if new_msg:
+            st.toast("🔔 Message from Doctor received!")
+            st.session_state.messages.append({
+                "role": "assistant", 
+                "content": "Message from your Doctor:",
+                "audio": new_msg["audio_url"]
+            })
+            # Mark as played so it doesn't repeat
+            db.doctor_messages.update_one(
+                {"_id": new_msg["_id"]},
+                {"$set": {"played": True}}
+            )
+            st.rerun()
+    except:
+        pass
 
 # --- Sidebar: Patient Selection ---
 with st.sidebar:
-    st.title("🏥 CareMate Admin")
-    st.info("Select a patient to start the bedside session.")
+    st.title("📟 Bedside Device")
+    st.info("Assign this device to a room/patient.")
     
     try:
-        client = MongoClient(MONGO_URI)
-        db = client[DB_NAME]
-        patients = list(db.patients.find({}, {"name": 1, "patient_id": 1}).limit(10))
+        # Use the SECONDARY database for fast lookup
+        client = MongoClient("mongodb+srv://Caremate-frontend:FIOWipLqLhFyp4uP@cluster0.agxm8kg.mongodb.net/?appName=Cluster0")
+        db = client["caremate_interaction_db"]
         
-        patient_options = {p['name']: p['patient_id'] for p in patients}
-        selected_name = st.selectbox("Active Patient:", options=list(patient_options.keys()))
+        # Fetch synchronized patient lookup list
+        patients = list(db.patient_lookup.find({}, {"name": 1, "patient_id": 1, "room_id": 1}).sort("patient_id", 1))
         
-        if selected_name:
-            st.session_state.patient_id = patient_options[selected_name]
-            # Show patient quick info
-            p_data = db.patients.find_one({"patient_id": st.session_state.patient_id})
-            st.write(f"**Age:** {p_data['age']}")
-            st.write(f"**Blood:** {p_data['blood_group']}")
-            st.write(f"**Room:** {db.visits.find_one({'patient_id': st.session_state.patient_id})['room_id']}")
+        patient_options = {f"Patient {p['patient_id']} - {p['name']} (Room {p['room_id']})": p['patient_id'] for p in patients}
+        selected_option = st.selectbox("Assign Device:", options=list(patient_options.keys()))
+        
+        if selected_option:
+            st.session_state.patient_id = patient_options[selected_option]
+            p_info = db.patient_lookup.find_one({"patient_id": st.session_state.patient_id})
+            st.session_state.patient_name = p_info['name'] if p_info else "Unknown"
+            st.success(f"Device Active in Room {p_info['room_id']}")
+            st.write(f"**Patient:** {p_info['name']}")
+            st.write(f"**ID:** {p_info['patient_id']}")
             
     except Exception as e:
-        st.error(f"DB Connection Error: {e}")
+        st.error(f"Sync Error: {e}")
 
     st.divider()
-    if st.button("Clear Chat History"):
+    if st.button("Clear Screen"):
         st.session_state.messages = []
         st.rerun()
 
+# Run polling logic
+if st.session_state.patient_id:
+    check_for_doctor_messages()
+
 # --- Main Chat UI ---
-st.title("CareMate AI Assistant")
-st.caption("Production-Grade Medical Orchestration & Voice Response")
+st.title("CareMate Bedside Assistant")
+st.caption("Press 'Process Voice' or type to speak with CareMate.")
 
 # Display chat messages
 for message in st.session_state.messages:
@@ -123,7 +163,10 @@ if uploaded_file and st.session_state.patient_id:
                 files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "audio/mpeg")}
                 response = requests.post(
                     f"{API_URL}/voice",
-                    params={"patient_id": st.session_state.patient_id},
+                    params={
+                        "patient_id": st.session_state.patient_id,
+                        "patient_name": st.session_state.patient_name
+                    },
                     files=files,
                     timeout=120
                 )

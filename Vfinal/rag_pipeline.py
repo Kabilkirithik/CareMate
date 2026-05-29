@@ -13,26 +13,35 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = "caremate_db"
-CHROMA_PATH = os.path.join("chroma_db")
-REPORTS_DIR = os.path.join("patient_reports")
+
+# Robust Path Handling
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CHROMA_PATH = os.path.join(BASE_DIR, "chroma_db")
+REPORTS_DIR = os.path.join(BASE_DIR, "patient_reports")
 
 class CareMateRAG:
     def __init__(self):
-        # 1. Initialize ChromaDB (Local Persistent)
-        self.chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
-        
-        # 2. Use a free, local embedding model (all-MiniLM-L6-v2)
-        # This model is small (~90MB) and very fast.
-        self.embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name="all-MiniLM-L6-v2"
-        )
-        
-        # 3. Create or get the collection
-        self.collection = self.chroma_client.get_or_create_collection(
-            name="patient_reports",
-            embedding_function=self.embedding_fn,
-            metadata={"hnsw:space": "cosine"} # Use cosine similarity for better semantic match
-        )
+        try:
+            # 1. Initialize ChromaDB (Local Persistent)
+            self.chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
+            
+            # 2. Use a free, local embedding model (all-MiniLM-L6-v2)
+            self.embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
+                model_name="all-MiniLM-L6-v2"
+            )
+            
+            # 3. Create or get the collection
+            self.collection = self.chroma_client.get_or_create_collection(
+                name="patient_reports",
+                embedding_function=self.embedding_fn,
+                metadata={"hnsw:space": "cosine"}
+            )
+            self._available = True
+        except Exception as e:
+            logger.error(f"ChromaDB initialization failed: {e}. RAG will be unavailable.")
+            self._available = False
+            self.chroma_client = None
+            self.collection = None
 
     def extract_text_from_pdf(self, pdf_path):
         """Extracts all text from a given PDF file."""
@@ -47,7 +56,11 @@ class CareMateRAG:
             return None
 
     def index_reports(self):
-        """Indexes medical content from PDFs into ChromaDB, focusing on high-signal data."""
+        """Indexes medical content from PDFs into ChromaDB."""
+        if not self._available:
+            logger.warning("ChromaDB unavailable — skipping index_reports")
+            return
+
         client = MongoClient(MONGO_URI)
         db = client[DB_NAME]
         
@@ -75,7 +88,7 @@ class CareMateRAG:
 
         for doc in docs_metadata:
             relative_path = doc['file_path'].lstrip('/')
-            full_path = os.path.join("Vfinal", relative_path)
+            full_path = os.path.join(BASE_DIR, relative_path)
             
             if not os.path.exists(full_path):
                 continue
@@ -128,10 +141,11 @@ class CareMateRAG:
             logger.info(f"Successfully indexed {len(documents)} high-signal medical chunks.")
 
     def query_reports(self, query_text, patient_id, n_results=3):
-        """
-        Secure multi-tenant search.
-        Only returns results where metadata['patient_id'] matches the provided ID.
-        """
+        """Secure multi-tenant search."""
+        if not self._available:
+            logger.warning("ChromaDB unavailable — returning empty results")
+            return {"documents": [[]], "metadatas": [[]], "distances": [[]]}
+
         logger.info(f"Searching reports for Patient: {patient_id} | Query: '{query_text}'")
         
         results = self.collection.query(
