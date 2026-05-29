@@ -1,9 +1,8 @@
 import os
 import uuid
 from datetime import datetime, timedelta
-from typing import Type, Optional
+from typing import Optional
 from pydantic import BaseModel, Field
-from crewai.tools import BaseTool
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from rag_pipeline import CareMateRAG
@@ -12,28 +11,7 @@ load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = "caremate_db"
 
-from meditron_client import MeditronClient
-
-# --- Schema Definitions ---
-
-class MeditronInput(BaseModel):
-    patient_id: str = Field(..., description="The unique ID of the patient.")
-    context: str = Field(..., description="The medical context or report data retrieved.")
-    question: str = Field(..., description="The patient's original medical question.")
-
-# --- Additional Tool ---
-
-class MeditronMedicalTool(BaseTool):
-    name: str = "Meditron Medical Reasoning Tool"
-    description: str = "Delegates complex medical questions to the specialized Meditron model. Use this for all health-related answers."
-    args_schema: Type[BaseModel] = MeditronInput
-
-    def _run(self, patient_id: str, context: str, question: str) -> str:
-        client = MeditronClient()
-        prompt = f"Patient ID: {patient_id}\nContext: {context}\nQuestion: {question}\n\nExpert Medical Response:"
-        return client.generate_response(prompt)
-
-# --- (Keep existing tools) ---
+# --- Schema Definitions for Tools ---
 
 class PatientIDInput(BaseModel):
     patient_id: str = Field(..., description="The unique ID of the patient.")
@@ -50,11 +28,7 @@ class WorkflowInput(BaseModel):
 
 # --- Tool Implementations ---
 
-class PatientContextTool(BaseTool):
-    name: str = "Patient Context Tool"
-    description: str = "Retrieve patient profile, active visit, room details, and assigned staff from MongoDB."
-    args_schema: Type[BaseModel] = PatientIDInput
-
+class PatientContextTool:
     def _run(self, patient_id: str) -> str:
         client = MongoClient(MONGO_URI)
         db = client[DB_NAME]
@@ -79,11 +53,7 @@ class PatientContextTool(BaseTool):
         
         return context
 
-class MedicalRAGTool(BaseTool):
-    name: str = "Medical RAG Retrieval Tool"
-    description: str = "Search patient-specific medical reports, scans, and lab results using semantic search."
-    args_schema: Type[BaseModel] = RAGQueryInput
-
+class MedicalRAGTool:
     def _run(self, patient_id: str, query: str) -> str:
         rag = CareMateRAG()
         results = rag.query_reports(query, patient_id, n_results=2)
@@ -93,11 +63,7 @@ class MedicalRAGTool(BaseTool):
             
         return "\n---\n".join(results['documents'][0])
 
-class SummaryContextTool(BaseTool):
-    name: str = "Summary Context Tool"
-    description: str = "Retrieve condensed medical summaries and recent concern history for the patient."
-    args_schema: Type[BaseModel] = PatientIDInput
-
+class SummaryContextTool:
     def _run(self, patient_id: str) -> str:
         client = MongoClient(MONGO_URI)
         db = client[DB_NAME]
@@ -109,11 +75,7 @@ class SummaryContextTool(BaseTool):
         s = summaries[0]
         return f"Recent Summary (Date: {s['generated_at']}):\nConcerns: {s['patient_concerns']}\nHistory: {s['request_history']}\nDoctor Notes: {s['doctor_notes']}"
 
-class WorkflowActionTool(BaseTool):
-    name: str = "Workflow Action Tool"
-    description: str = "Execute hospital workflows: create nurse/doctor/utility requests, log events, and notify staff."
-    args_schema: Type[BaseModel] = WorkflowInput
-
+class WorkflowActionTool:
     def _run(self, patient_id: str, request_type: str, request_text: str, category: Optional[str] = None) -> str:
         client = MongoClient(MONGO_URI)
         db = client[DB_NAME]

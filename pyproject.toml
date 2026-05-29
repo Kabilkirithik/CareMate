@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "audio-recorder-streamlit>=0.0.10",
+    "audiorecorder>=0.1",
     "boto3>=1.42.65",
     "chromadb>=1.1.1",
     "crewai[goole-genai,tools]>=1.9.3",
@@ -21,6 +23,8 @@ dependencies = [
     "langdetect>=1.0.9",
     "litellm>=1.75.3",
     "pandas>=3.0.1",
+    "pdf2image>=1.17.0",
+    "pillow>=12.1.1",
     "pymongo>=4.16.0",
     "pypdf>=6.12.1",
     "python-dotenv>=1.1.1",

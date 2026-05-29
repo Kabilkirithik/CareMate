@@ -5,8 +5,9 @@ from sklearn.svm import SVC
 from sentence_transformers import SentenceTransformer
 
 def retrain_v5():
-    data_path = 'Vfinal/ml_model/caremate_intent_dataset_cleaned.csv'
-    model_output_path = 'Vfinal/ml_model/caremate_sentence_transformer_svm.pkl'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(base_dir, 'caremate_intent_dataset_cleaned.csv')
+    model_output_path = os.path.join(base_dir, 'caremate_sentence_transformer_svm.pkl')
     st_model_name = 'all-MiniLM-L6-v2'
 
     print("Loading original dataset...")
