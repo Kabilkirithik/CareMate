@@ -73,6 +73,12 @@ class CareMateBackend:
             self.executor, self.process_input, text_input, patient_id, original_lang
         )
         
+        # process_input returns (response_text, intent) tuple or just string
+        if isinstance(result_en, tuple):
+            result_en, classified_intent = result_en
+        else:
+            classified_intent = None
+        
         # Guard: ensure result_en is always a valid string
         if not result_en or not isinstance(result_en, str):
             logger.error(f"process_input returned None or invalid for: '{text_input}'")
@@ -108,7 +114,8 @@ class CareMateBackend:
             "transcript": text_input,
             "response_text": result_final,
             "response_audio": audio_response_path,
-            "language": original_lang
+            "language": original_lang,
+            "intent": classified_intent,  # pass intent up to api.py for WebSocket routing
         }
 
     def process_voice_input(self, audio_file_path: str, patient_id: str):
@@ -124,145 +131,95 @@ class CareMateBackend:
             loop.close()
 
     def process_input(self, user_input: str, patient_id: str, original_lang: str = "en"):
-        """Processes text input with multi-model routing and optimizations."""
-        logger.info(f"Processing Query: '{user_input}' (Inferred Lang: {original_lang})")
-        
-        # 1. Intent Classification (SVM Model)
-        classification = self.router.classify(user_input)
-        intent = classification['intent']
-        confidence = classification['confidence']
-        
-        logger.info(f"Routed Intent: {intent.upper()} (Confidence: {confidence:.2f})")
+        """
+        Architecture flow per spec:
+          1. Emergency Detection  (deterministic, before AI)
+          2. Intent Routing       (deterministic SVM, not a tool)
+          3. Cache check          (skip crew for repeated queries)
+          4. CrewAI pipeline      (Patient Agent → Central Agent)
+          5. Fallback             (direct logic if crew fails)
+        Returns: tuple (response_text: str, intent: str)
+        """
+        logger.info(f"Processing: '{user_input}' (lang={original_lang})")
 
-        # Check cache first for non-emergency intents
-        if intent != "emergency":
-            cached_response = optimizer.get_cached_response(user_input, intent)
-            if cached_response:
-                logger.info("Using cached response")
-                return cached_response
+        # ── LAYER 1: Emergency Detection (deterministic, zero AI overhead) ──
+        from caremate_crew import detect_emergency, route_intent, run_caremate_crew
 
+        is_emergency = detect_emergency(user_input)
+        if is_emergency:
+            logger.critical("EMERGENCY DETECTED — triggering immediate alert")
+            try:
+                from hospital_tools import WorkflowActionTool
+                WorkflowActionTool()._run(
+                    patient_id=patient_id,
+                    request_type="EMERGENCY",
+                    request_text=user_input,
+                    category="CRITICAL"
+                )
+            except Exception as e:
+                logger.error(f"Emergency workflow error: {e}")
+            return ("EMERGENCY ALERT TRIGGERED! Help is on the way. Please stay calm.", "emergency")
+
+        # ── LAYER 2: Intent Routing (deterministic SVM, not a tool) ──
+        classification = route_intent(user_input)
+        intent = classification["intent"]
+        confidence = classification["confidence"]
+        logger.info(f"Intent: {intent.upper()} ({confidence:.2f})")
+
+        # ── LAYER 3: Cache check ──
+        cached = optimizer.get_cached_response(user_input, intent)
+        if cached:
+            logger.info("Cache hit — skipping crew")
+            return (cached, intent)
+
+        # ── LAYER 4: CrewAI pipeline ──
+        try:
+            logger.info(f"[CrewAI] Launching agents (intent={intent})...")
+            response = run_caremate_crew(
+                patient_query=user_input,
+                patient_id=patient_id,
+                intent=intent,
+                is_emergency=False,
+            )
+            if response and isinstance(response, str) and len(response) > 4:
+                optimizer.cache_response(user_input, intent, response)
+                return (response, intent)
+            logger.warning("[CrewAI] Empty/invalid response — falling back")
+        except Exception as e:
+            logger.error(f"[CrewAI] Failed: {e} — falling back")
+
+        # ── LAYER 5: Fallback (direct logic) ──
+        return (self._direct_process(user_input, patient_id, intent), intent)
+
+    def _direct_process(self, user_input: str, patient_id: str, intent: str) -> str:
+        """Direct processing fallback — keeps system working if CrewAI fails. Returns response string only."""
         from hospital_tools import WorkflowActionTool
 
-        # --- PATH 1: EMERGENCY (INSTANT) ---
-        if intent == "emergency":
-            logger.info("CRITICAL: EMERGENCY DETECTED.")
+        if intent in ["nurse_request", "nutrition_request", "utility_request"]:
             try:
-                wf_tool = WorkflowActionTool()
-                wf_tool._run(patient_id=patient_id, request_type="EMERGENCY", request_text=user_input, category="CRITICAL")
-                msg = "EMERGENCY ALERT TRIGGERED! Help is on the way. Please stay calm."
-                return msg # Voice loop will translate if needed
-            except Exception as e:
-                logger.error(f"Emergency Error: {e}")
-                return "EMERGENCY ALERT TRIGGERED!"
-
-        # --- PATH 2: FAST PATH (CONVERSATIONAL via Meditron) ---
-        if intent == "general_conversation":
-            logger.info("Decision: Handling via Meditron Fast Path...")
-            try:
-                from meditron_client import MeditronClient
-                m_client = MeditronClient()
-                
-                user_lower = user_input.lower()
-                
-                # Build a very strict, structured prompt for Meditron
-                prompt = (
-                    "You are CareMate, a hospital bedside assistant. "
-                    "A patient said: \"{input}\". "
-                    "Respond with ONE short, kind sentence (max 12 words). "
-                    "Do NOT ask questions about staff or hospital operations. "
-                    "Only respond to the patient's emotional or comfort needs.\n"
-                    "CareMate response:"
-                ).format(input=user_input)
-                
-                response = m_client.generate_response(prompt, max_tokens=40, temperature=0.2)
-                
-                # Extract only the part after "CareMate response:"
-                clean_response = response.strip()
-                if "CareMate response:" in clean_response:
-                    clean_response = clean_response.split("CareMate response:")[-1].strip()
-                
-                # ✅ KEY FIX: Take only the FIRST sentence — Meditron always hallucinates after it
-                import re
-                # Split on sentence endings OR newlines OR scenario markers
-                first_sentence = re.split(r'(?<=[.!?])["\s]|\n|###|##|\*\*', clean_response)[0]
-                clean_response = first_sentence.strip().strip('"').strip("'").strip()
-                
-                # Remove markdown artifacts like "###", "**", "##"
-                clean_response = re.sub(r'[#*]+', '', clean_response).strip()
-                
-                # Validate: reject if it still looks like hallucination
-                hallucination_signals = [
-                    "how long did you work",
-                    "hospital before becoming",
-                    "patient said",
-                    "caremate said",
-                    "you are caremate",
-                    "respond with",
-                    "do not ask",
-                    "max 12 words",
-                    "scenario",
-                    "assistant introduces",
-                ]
-                
-                is_hallucination = (
-                    len(clean_response) < 4
-                    or clean_response.lower() == user_input.lower()
-                    or any(signal in clean_response.lower() for signal in hallucination_signals)
+                WorkflowActionTool()._run(
+                    patient_id=patient_id, request_type=intent,
+                    request_text=user_input, category="general"
                 )
-                
-                if is_hallucination:
-                    logger.warning(f"Meditron hallucination detected: '{clean_response}' — using keyword fallback")
-                    clean_response = self._get_conversational_fallback(user_lower)
-                
-                final_response = clean_response.strip()
-                optimizer.cache_response(user_input, intent, final_response)
-                return final_response
-                
+                response = generate_openrouter_response(
+                    f"Patient requested: '{user_input}'. Confirm briefly:", max_tokens=30
+                )
+                return response or "Your request has been received. The team will assist you shortly."
             except Exception as e:
-                logger.error(f"Fast Path Error: {e}")
-                return self._get_conversational_fallback(user_input.lower())
-
-        # --- PATH 3: ZERO-LOOP WORKFLOW (Logistics via Nemotron) ---
-        workflow_intents = ["nurse_request", "nutrition_request", "utility_request"]
-        if intent in workflow_intents:
-            logger.info(f"Decision: Handling {intent} via Nemotron Zero-Loop...")
-            try:
-                wf_tool = WorkflowActionTool()
-                category = "water" if "water" in user_input.lower() else "general"
-                wf_tool._run(patient_id=patient_id, request_type=intent, request_text=user_input, category=category)
-                
-                prompt = f"Patient requested: '{user_input}'. Confirm briefly:"
-                response = generate_openrouter_response(prompt, max_tokens=30)
-                
-                # Guard against None
-                if not response or not isinstance(response, str):
-                    response = "Your request has been received. The appropriate team will assist you shortly."
-                
-                optimizer.cache_response(user_input, intent, response)
-                return response
-            except Exception as e:
-                logger.error(f"Workflow Error: {e}")
+                logger.error(f"Workflow fallback error: {e}")
                 return "Your request has been received. The appropriate team will assist you shortly."
 
-        # --- PATH 4: MEDICAL QUERIES → Route to Doctor Dashboard, don't answer ---
-        medical_intents = ["status_query", "doctor_query"]
-        if intent in medical_intents:
-            logger.info(f"Decision: Medical query — routing to doctor dashboard, not answering.")
-            
-            # Just acknowledge and log — the doctor dashboard will show this
-            acknowledgements = {
-                "doctor_query": "Your question has been sent to your doctor. They will respond to you shortly.",
-                "status_query": "I've forwarded your query to your doctor. They will review your records and get back to you soon.",
-            }
-            response = acknowledgements.get(intent, "Your query has been sent to the medical team. Please wait for a response.")
-            
-            optimizer.cache_response(user_input, intent, response)
-            return response
+        if intent in ["doctor_query", "status_query"]:
+            try:
+                WorkflowActionTool()._run(
+                    patient_id=patient_id, request_type="doctor_query",
+                    request_text=user_input, category="HIGH"
+                )
+            except Exception:
+                pass
+            return "Your question has been sent to your doctor. They will respond to you shortly."
 
-        # FALLBACK — should never reach here, but safety net
-        fallback_response = "I have received your message and am looking into it. Please wait a moment."
-        optimizer.cache_response(user_input, intent, fallback_response)
-        return fallback_response
+        return self._get_conversational_fallback(user_input.lower())
 
     def _get_conversational_fallback(self, user_lower: str) -> str:
         """Keyword-based fallback for general conversation when Meditron hallucinates."""

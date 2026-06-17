@@ -123,64 +123,80 @@ class ConnectionManager:
         logger.info(f"Sent {message['type']} to {count} {target_role} dashboards")
 
     async def send_to_assigned_staff(self, message: dict, patient_id: str, intent: str):
-        """Send message only to staff assigned to this patient based on intent"""
-        # Determine which roles should receive this notification
+        """
+        Send WebSocket notification ONLY to the staff assigned to this specific patient.
+        Each intent maps to exactly one role — only that staff member's dashboard gets it.
+        Admin always receives a copy.
+        Emergency broadcasts to all connected dashboards.
+        """
+        # Intent → which role's dashboard should receive this
         role_mapping = {
-            "doctor_query": ["doctor", "admin"],
-            "status_query": ["doctor", "admin"],
-            "emergency": ["doctor", "admin"],  # Emergencies go to all doctors + admin
-            "nurse_request": ["nurse", "admin"],
-            "nutrition_request": ["nutritionist", "admin"],
-            "utility_request": ["utility", "admin"],
-            "general_conversation": [],  # No dashboard notification
+            "doctor_query":      ["doctor"],
+            "status_query":      ["doctor"],
+            "emergency":         [],   # special: broadcast all
+            "nurse_request":     ["nurse"],
+            "nutrition_request": ["nutrition", "nutritionist"],  # handle both role name variants
+            "utility_request":   ["utility"],
+            "general_conversation": [],  # no dashboard notification
         }
-        
-        target_roles = role_mapping.get(intent, ["admin"])
-        
-        # For emergencies, broadcast to all doctors
+
+        target_roles = role_mapping.get(intent, [])
+
+        # Emergencies — broadcast to ALL connected dashboards immediately
         if intent == "emergency":
             await self.broadcast(message)
             return
-        
-        # Get assigned staff for this patient
-        lookup = interaction_db.patient_lookup.find_one({"patient_id": patient_id})
-        if not lookup:
-            # If no assignment found, send to all staff of target roles
-            for role in target_roles:
-                await self.send_to_role(message, role)
+
+        # No target roles means no notification needed
+        if not target_roles:
             return
-        
-        # Get assigned staff IDs
-        assigned_staff_ids = []
-        if "doctor" in target_roles and lookup.get("doctor_id"):
-            assigned_staff_ids.append(lookup.get("doctor_id"))
-        if "nurse" in target_roles and lookup.get("nurse_id"):
-            assigned_staff_ids.append(lookup.get("nurse_id"))
-        
-        # Send to assigned staff + admin
+
+        # Look up which specific staff is assigned to this patient
+        lookup = interaction_db.patient_lookup.find_one({"patient_id": str(patient_id)})
+
+        # Build set of assigned staff IDs for the relevant role
+        assigned_staff_ids = set()
+        if lookup:
+            if any(r in target_roles for r in ["doctor"]):
+                if lookup.get("doctor_id"):
+                    assigned_staff_ids.add(str(lookup["doctor_id"]))
+            if any(r in target_roles for r in ["nurse"]):
+                if lookup.get("nurse_id"):
+                    assigned_staff_ids.add(str(lookup["nurse_id"]))
+            if any(r in target_roles for r in ["nutrition", "nutritionist"]):
+                if lookup.get("nutritionist_id"):
+                    assigned_staff_ids.add(str(lookup["nutritionist_id"]))
+            # utility_id field — check both possible field names
+            if any(r in target_roles for r in ["utility"]):
+                uid = lookup.get("utility_id") or lookup.get("facility_staff_id")
+                if uid:
+                    assigned_staff_ids.add(str(uid))
+
         count = 0
         for connection, info in list(self.active_connections.items()):
-            staff_id = info.get("staff_id")
-            role = info.get("role")
-            
-            # Send if: assigned to patient OR admin OR utility (sees all)
-            if (staff_id in assigned_staff_ids or 
-                role == "admin" or 
-                (role == "utility" and "utility" in target_roles) or
-                (role == "nutritionist" and "nutritionist" in target_roles)):
+            ws_staff_id = str(info.get("staff_id") or "")
+            ws_role     = str(info.get("role") or "")
+
+            should_send = False
+
+            # Always notify admin
+            if ws_role == "admin":
+                should_send = True
+            # Notify the specific assigned staff member
+            elif ws_staff_id and ws_staff_id in assigned_staff_ids:
+                should_send = True
+            # Fallback: if no assignment found, send to all staff of target roles
+            elif not assigned_staff_ids and ws_role in target_roles:
+                should_send = True
+
+            if should_send:
                 try:
                     await connection.send_json(message)
                     count += 1
                 except Exception as e:
-                    logger.error(f"Send to assigned staff error: {e}")
-        
-        logger.info(f"Sent {message['type']} to {count} assigned staff for patient {patient_id}")
+                    logger.error(f"WebSocket send error to {ws_staff_id}: {e}")
 
-        for connection in self.active_connections:
-            try:
-                await connection.send_json(message)
-            except Exception as e:
-                logger.error(f"Broadcast Error: {e}")
+        logger.info(f"Sent {message['type']} (intent={intent}) to {count} staff for patient {patient_id}")
 
 manager = ConnectionManager()
 
@@ -238,23 +254,45 @@ async def chat_endpoint(request: ChatRequest, req: Request):
         
         classification = backend.router.classify(request.message)
         intent = classification['intent']
-        result_text = backend.process_input(request.message, request.patient_id)
+        result = backend.process_input(request.message, request.patient_id)
+        
+        # process_input returns (response_text, intent) tuple
+        if isinstance(result, tuple):
+            result_text, intent = result
+        else:
+            result_text = result
         
         audio_path = backend.speech.tts(result_text)
         audio_url = f"{str(req.base_url).rstrip('/')}/audio/{os.path.basename(audio_path)}" if audio_path else None
         
+        # Stream audio to ESP32 if enabled
+        if audio_path and os.getenv("ESP32_ENABLED", "false").lower() == "true":
+            try:
+                from sender import stream_to_esp32
+                esp32_port = int(os.getenv("ESP32_PORT", "5005"))
+                asyncio.create_task(asyncio.to_thread(stream_to_esp32, audio_path, esp32_port))
+                logger.info(f"✓ Queued audio for ESP32 streaming on port {esp32_port}")
+            except Exception as e:
+                logger.error(f"ESP32 streaming error: {e}")
+        
         _log_interaction(
             request.patient_id, patient_name, room_id,
-            type="TEXT", message=request.message, intent=intent,
+            type="TEXT",
+            message=request.message,
+            intent=intent,
+            response_text=result_text,
         )
 
-        await manager.send_to_assigned_staff(_ws_payload("NEW_REQUEST", {
-            "patient_id": request.patient_id,
-            "patient_name": patient_name,
-            "room": room_id,
-            "intent": intent,
-            "message": request.message,
-        }), request.patient_id, intent)
+        await manager.send_to_assigned_staff(_ws_payload(
+            "EMERGENCY_ALERT" if intent == "emergency" else "NEW_REQUEST",
+            {
+                "patient_id": request.patient_id,
+                "patient_name": patient_name,
+                "room": room_id,
+                "intent": intent,
+                "message": request.message,
+            }
+        ), request.patient_id, intent)
         
         return ChatResponse(session_id=str(uuid.uuid4()), response_text=result_text, response_audio_url=audio_url, intent=intent)
     except Exception as e:
@@ -325,11 +363,21 @@ async def voice_endpoint(req: Request, patient_id: str, file: UploadFile = File(
         if "error" in result: 
             logger.error(f"Voice processing error: {result['error']}")
             raise HTTPException(status_code=400, detail=result["error"])
-            
-        logger.info("Classifying intent...")
-        intent = backend.router.classify(result['transcript'])['intent']
         
+        # Use intent from the processing pipeline (already classified inside process_input)
+        # Fall back to re-classifying the transcript only if not provided
+        intent = result.get("intent") or backend.router.classify(result.get("transcript", ""))["intent"]
+        
+        logger.info(f"Intent: {intent}")
         logger.info("Logging interaction...")
+        _log_interaction(
+            patient_id, p_name, room_id,
+            type="VOICE",
+            transcript=result.get("transcript", ""),
+            intent=intent,
+            message=result.get("transcript", ""),
+            response_text=result.get("response_text", ""),
+        )
         _log_interaction(
             patient_id, p_name, room_id,
             type="VOICE", transcript=result["transcript"], intent=intent,
@@ -351,6 +399,18 @@ async def voice_endpoint(req: Request, patient_id: str, file: UploadFile = File(
 
         logger.info("Generating audio URL...")
         audio_url = _audio_public_url(req, result.get("response_audio"))
+        
+        # Stream audio to ESP32 if enabled
+        if result.get("response_audio") and os.getenv("ESP32_ENABLED", "false").lower() == "true":
+            try:
+                from sender import stream_to_esp32
+                esp32_port = int(os.getenv("ESP32_PORT", "5005"))
+                asyncio.create_task(asyncio.to_thread(
+                    stream_to_esp32, result.get("response_audio"), esp32_port
+                ))
+                logger.info(f"✓ Queued audio for ESP32 streaming on port {esp32_port}")
+            except Exception as e:
+                logger.error(f"ESP32 streaming error: {e}")
         
         logger.info("Voice endpoint completed successfully")
         return ChatResponse(
@@ -527,28 +587,40 @@ async def get_doctor_queries(staff_id: Optional[str] = Query(None)):
     doctor_intents = ["doctor_query", "status_query", "emergency"]
 
     if staff_id:
+        # Get the exact patient IDs this doctor is assigned to
         assignment = frontend_db.staff_assignments.find_one(
-            {"staff_id": staff_id, "role": "doctor"}, {"_id": 0}
+            {"staff_id": staff_id}, {"_id": 0}
         )
         patient_ids = assignment.get("patient_ids", []) if assignment else []
-        query_filter = {"intent": {"$in": doctor_intents}, "patient_id": {"$in": patient_ids}} if patient_ids else {"intent": {"$in": doctor_intents}}
+
+        # Also check patient_lookup for direct assignment
+        if not patient_ids:
+            lookups = list(interaction_db.patient_lookup.find({"doctor_id": staff_id}, {"patient_id": 1}))
+            patient_ids = [l["patient_id"] for l in lookups]
+
+        query_filter = (
+            {"intent": {"$in": doctor_intents}, "patient_id": {"$in": patient_ids}}
+            if patient_ids else
+            {"intent": {"$in": doctor_intents}}
+        )
     else:
         query_filter = {"intent": {"$in": doctor_intents}}
 
     queries = list(
-        interaction_db.interactions.find(query_filter, {"_id": 0})
+        interaction_db.interactions.find(query_filter, {"_id": 1, "patient_id": 1, "patient_name": 1, "room_id": 1, "message": 1, "transcript": 1, "intent": 1, "timestamp": 1, "status": 1})
         .sort("timestamp", -1).limit(50)
     )
 
-    # Enrich with real patient names from patient_lookup
     for q in queries:
+        q["id"] = str(q.pop("_id"))  # expose _id as "id" string
         lookup = interaction_db.patient_lookup.find_one(
             {"patient_id": q.get("patient_id")}, {"_id": 0, "name": 1, "room_id": 1}
         )
         if lookup:
             q["patient_name"] = lookup.get("name", q.get("patient_name", "Unknown"))
-            if not q.get("room_id") or q.get("room_id") == "N/A":
-                q["room_id"] = lookup.get("room_id", "N/A")
+            q["room_id"] = lookup.get("room_id", q.get("room_id", "N/A"))
+        if hasattr(q.get("timestamp"), "isoformat"):
+            q["timestamp"] = q["timestamp"].isoformat()
 
     return {"queries": queries}
 
@@ -560,26 +632,36 @@ async def get_nurse_queries(staff_id: Optional[str] = Query(None)):
 
     if staff_id:
         assignment = frontend_db.staff_assignments.find_one(
-            {"staff_id": staff_id, "role": "nurse"}, {"_id": 0}
+            {"staff_id": staff_id}, {"_id": 0}
         )
         patient_ids = assignment.get("patient_ids", []) if assignment else []
 
-        if patient_ids:
-            queries = list(
-                interaction_db.interactions.find(
-                    {"intent": {"$in": nurse_intents}, "patient_id": {"$in": patient_ids}},
-                    {"_id": 0}
-                ).sort("timestamp", -1).limit(20)
-            )
-        else:
-            queries = []
-    else:
-        queries = list(
-            interaction_db.interactions.find(
-                {"intent": {"$in": nurse_intents}},
-                {"_id": 0}
-            ).sort("timestamp", -1).limit(20)
+        if not patient_ids:
+            lookups = list(interaction_db.patient_lookup.find({"nurse_id": staff_id}, {"patient_id": 1}))
+            patient_ids = [l["patient_id"] for l in lookups]
+
+        query_filter = (
+            {"intent": {"$in": nurse_intents}, "patient_id": {"$in": patient_ids}}
+            if patient_ids else
+            {"intent": {"$in": nurse_intents}}
         )
+    else:
+        query_filter = {"intent": {"$in": nurse_intents}}
+
+    queries = list(
+        interaction_db.interactions.find(query_filter, {"_id": 1, "patient_id": 1, "patient_name": 1, "room_id": 1, "message": 1, "transcript": 1, "intent": 1, "timestamp": 1, "status": 1})
+        .sort("timestamp", -1).limit(50)
+    )
+    for q in queries:
+        q["id"] = str(q.pop("_id"))
+        lookup = interaction_db.patient_lookup.find_one(
+            {"patient_id": q.get("patient_id")}, {"_id": 0, "name": 1, "room_id": 1}
+        )
+        if lookup:
+            q["patient_name"] = lookup.get("name", q.get("patient_name", "Unknown"))
+            q["room_id"] = lookup.get("room_id", q.get("room_id", "N/A"))
+        if hasattr(q.get("timestamp"), "isoformat"):
+            q["timestamp"] = q["timestamp"].isoformat()
 
     return {"queries": queries}
 
@@ -591,41 +673,79 @@ async def get_nutrition_queries(staff_id: Optional[str] = Query(None)):
 
     if staff_id:
         assignment = frontend_db.staff_assignments.find_one(
-            {"staff_id": staff_id, "role": "nutritionist"}, {"_id": 0}
+            {"staff_id": staff_id}, {"_id": 0}
         )
         patient_ids = assignment.get("patient_ids", []) if assignment else []
 
-        if patient_ids:
-            queries = list(
-                interaction_db.interactions.find(
-                    {"intent": {"$in": nutrition_intents}, "patient_id": {"$in": patient_ids}},
-                    {"_id": 0}
-                ).sort("timestamp", -1).limit(20)
-            )
-        else:
-            queries = []
-    else:
-        queries = list(
-            interaction_db.interactions.find(
-                {"intent": {"$in": nutrition_intents}},
-                {"_id": 0}
-            ).sort("timestamp", -1).limit(20)
+        if not patient_ids:
+            lookups = list(interaction_db.patient_lookup.find({"nutritionist_id": staff_id}, {"patient_id": 1}))
+            patient_ids = [l["patient_id"] for l in lookups]
+
+        query_filter = (
+            {"intent": {"$in": nutrition_intents}, "patient_id": {"$in": patient_ids}}
+            if patient_ids else
+            {"intent": {"$in": nutrition_intents}}
         )
+    else:
+        query_filter = {"intent": {"$in": nutrition_intents}}
+
+    queries = list(
+        interaction_db.interactions.find(query_filter, {"_id": 1, "patient_id": 1, "patient_name": 1, "room_id": 1, "message": 1, "transcript": 1, "intent": 1, "timestamp": 1, "status": 1})
+        .sort("timestamp", -1).limit(50)
+    )
+    for q in queries:
+        q["id"] = str(q.pop("_id"))
+        lookup = interaction_db.patient_lookup.find_one(
+            {"patient_id": q.get("patient_id")}, {"_id": 0, "name": 1, "room_id": 1}
+        )
+        if lookup:
+            q["patient_name"] = lookup.get("name", q.get("patient_name", "Unknown"))
+            q["room_id"] = lookup.get("room_id", q.get("room_id", "N/A"))
+        if hasattr(q.get("timestamp"), "isoformat"):
+            q["timestamp"] = q["timestamp"].isoformat()
 
     return {"queries": queries}
 
 
 @app.get("/utility/queries")
 async def get_utility_queries(staff_id: Optional[str] = Query(None)):
-    """Get utility queries (utility staff see all rooms)"""
+    """Get utility queries for utility staff's assigned patients"""
     utility_intents = ["utility_request", "maintenance_request", "room_service"]
 
+    if staff_id:
+        assignment = frontend_db.staff_assignments.find_one(
+            {"staff_id": staff_id}, {"_id": 0}
+        )
+        patient_ids = assignment.get("patient_ids", []) if assignment else []
+
+        if not patient_ids:
+            lookups = list(interaction_db.patient_lookup.find(
+                {"$or": [{"utility_id": staff_id}, {"facility_staff_id": staff_id}]},
+                {"patient_id": 1}
+            ))
+            patient_ids = [l["patient_id"] for l in lookups]
+
+        query_filter = (
+            {"intent": {"$in": utility_intents}, "patient_id": {"$in": patient_ids}}
+            if patient_ids else
+            {"intent": {"$in": utility_intents}}
+        )
+    else:
+        query_filter = {"intent": {"$in": utility_intents}}
+
     queries = list(
-        interaction_db.interactions.find(
-            {"intent": {"$in": utility_intents}},
-            {"_id": 0}
-        ).sort("timestamp", -1).limit(20)
+        interaction_db.interactions.find(query_filter, {"_id": 0})
+        .sort("timestamp", -1).limit(50)
     )
+    for q in queries:
+        lookup = interaction_db.patient_lookup.find_one(
+            {"patient_id": q.get("patient_id")}, {"_id": 0, "name": 1, "room_id": 1}
+        )
+        if lookup:
+            q["patient_name"] = lookup.get("name", q.get("patient_name", "Unknown"))
+            q["room_id"] = lookup.get("room_id", q.get("room_id", "N/A"))
+        if hasattr(q.get("timestamp"), "isoformat"):
+            q["timestamp"] = q["timestamp"].isoformat()
 
     return {"queries": queries}
 
@@ -885,6 +1005,52 @@ async def doctor_text_response(body: DoctorTextResponse):
         "played": False,
     })
     return {"status": "success", "patient_id": body.patient_id}
+
+
+@app.post("/interactions/{interaction_id}/resolve")
+async def resolve_interaction(interaction_id: str):
+    """Mark an interaction/request as resolved"""
+    from bson import ObjectId
+    # Try by ObjectId first (MongoDB _id), then by interaction_id string
+    updated = False
+    try:
+        result = interaction_db.interactions.update_one(
+            {"_id": ObjectId(interaction_id)},
+            {"$set": {"status": "RESOLVED", "resolved_at": datetime.now()}}
+        )
+        updated = result.modified_count > 0
+    except Exception:
+        pass
+
+    if not updated:
+        interaction_db.interactions.update_one(
+            {"interaction_id": interaction_id},
+            {"$set": {"status": "RESOLVED", "resolved_at": datetime.now()}}
+        )
+
+    # Also mark in caremate_db requests
+    db.requests.update_one(
+        {"request_id": interaction_id},
+        {"$set": {"status": "DONE", "updated_at": datetime.now()}}
+    )
+    return {"status": "resolved", "interaction_id": interaction_id}
+
+
+@app.post("/interactions/{interaction_id}/respond")
+async def respond_interaction(interaction_id: str):
+    """Mark an interaction as responded to"""
+    from bson import ObjectId
+    try:
+        interaction_db.interactions.update_one(
+            {"_id": ObjectId(interaction_id)},
+            {"$set": {"status": "RESPONDED", "responded_at": datetime.now()}}
+        )
+    except Exception:
+        interaction_db.interactions.update_one(
+            {"interaction_id": interaction_id},
+            {"$set": {"status": "RESPONDED", "responded_at": datetime.now()}}
+        )
+    return {"status": "responded", "interaction_id": interaction_id}
 
 @app.get("/patients/{patient_id}/lookup")
 async def get_patient_lookup(patient_id: str):

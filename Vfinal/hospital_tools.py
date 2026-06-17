@@ -40,7 +40,8 @@ class PatientContextTool:
         visit = db.visits.find_one({"patient_id": patient_id, "status": "ACTIVE"}, {"_id": 0})
         if not visit:
             # Fallback to last visit if no active one
-            visit = db.visits.find().sort("admitted_at", -1).limit(1)[0]
+            visits = list(db.visits.find({"patient_id": patient_id}).sort("admitted_at", -1).limit(1))
+            visit = visits[0] if visits else {}
             visit_status = "Historical"
         else:
             visit_status = "Active"
@@ -86,6 +87,17 @@ class WorkflowActionTool:
         
         # 2. Create Request record
         req_id = str(uuid.uuid4())
+        # Priority: EMERGENCY > DOCTOR/NURSE > others
+        _priority_map = {
+            "EMERGENCY": "CRITICAL",
+            "DOCTOR": "HIGH",
+            "NURSE": "HIGH",
+            "NUTRITION": "MEDIUM",
+            "UTILITY": "LOW",
+            "STATUS": "LOW",
+        }
+        priority = _priority_map.get(request_type.upper(), "MEDIUM")
+        
         request_doc = {
             "request_id": req_id,
             "patient_id": patient_id,
@@ -95,7 +107,7 @@ class WorkflowActionTool:
             "request_text": request_text,
             "status": "REQUESTED",
             "created_at": datetime.now(),
-            "priority": "HIGH" if request_type.upper() in ["DOCTOR", "NURSE"] else "MEDIUM"
+            "priority": priority,
         }
         db.requests.insert_one(request_doc)
         

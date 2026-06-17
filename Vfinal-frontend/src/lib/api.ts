@@ -325,6 +325,14 @@ class CareMateAPI {
   async getUsers(): Promise<{ users: any[] }> {
     return this.request('/admin/users')
   }
+
+  async resolveInteraction(interactionId: string): Promise<any> {
+    return this.request(`/interactions/${interactionId}/resolve`, { method: 'POST' })
+  }
+
+  async respondInteraction(interactionId: string): Promise<any> {
+    return this.request(`/interactions/${interactionId}/respond`, { method: 'POST' })
+  }
 }
 
 // Export singleton instance

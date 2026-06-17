@@ -78,7 +78,8 @@ function UtilityDashboard() {
     return () => clearInterval(id);
   }, []);
 
-  const toggle = (id: string) =>
+  const toggle = async (id: string) => {
+    // Optimistic update first
     setItems((s) =>
       s.map((i) => {
         if (i.id !== id) return i;
@@ -88,6 +89,21 @@ function UtilityDashboard() {
         return { ...i, done };
       })
     );
+    // Persist to backend
+    try {
+      await api.resolveInteraction(id);
+    } catch {
+      // UI already updated, silent fail
+    }
+  };
+
+  const addressQuery = async (q: any) => {
+    try {
+      await api.resolveInteraction(q.id);
+    } catch {}
+    setQueries((prev) => prev.filter((x) => x.id !== q.id));
+    toast.success(`Request addressed`, { description: `Room ${q.room} · ${q.patient}` });
+  };
 
   return (
     <DashboardShell role="utility">
@@ -122,10 +138,10 @@ function UtilityDashboard() {
                 <p className="mt-0.5 text-xs text-muted-foreground">{q.patient}</p>
                 <p className="mt-1 text-xs line-clamp-2">{q.request}</p>
                 <button
-                  onClick={() => toast.success(`Utility request addressed for Room ${q.room}`)}
-                  className="mt-2 w-full rounded-lg bg-secondary px-2 py-1.5 text-[11px] font-semibold text-secondary-foreground hover:bg-secondary/90"
+                  onClick={() => addressQuery(q)}
+                  className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-secondary px-2 py-1.5 text-[11px] font-semibold text-secondary-foreground hover:bg-secondary/90 active:scale-95 transition"
                 >
-                  Address Request
+                  <CheckCircle2 className="h-3.5 w-3.5" /> Mark Resolved
                 </button>
               </div>
             ))}

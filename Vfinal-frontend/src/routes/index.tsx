@@ -107,7 +107,7 @@ function Hero() {
           Live real-time hospital coordination · v1
         </span>
         <h1 className="mt-6 mb-0 w-full text-center text-4xl font-black tracking-tight leading-tight md:text-6xl lg:text-7xl">
-          <KineticText text="The voice-first nervous system" />{" "}
+          <KineticText text="The voice-first patient assistant" />{" "}
           <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
             <KineticText text="for your hospital." startDelay={700} />
           </span>

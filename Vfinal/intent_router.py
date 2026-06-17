@@ -13,20 +13,27 @@ _KEYWORD_RULES: list[tuple[str, list[str]]] = [
     ]),
     ("nurse_request", [
         r"\bnurse\b", r"\biv\b", r"bandage", r"injection", r"medication",
-        r"painkiller", r"vitals check",
+        r"painkiller", r"vitals check", r"vital signs", r"blood pressure",
+        r"temperature check", r"medicine",
     ]),
     ("nutrition_request", [
         r"\bmeal\b", r"\bfood\b", r"\blunch\b", r"\bdinner\b", r"\bbreakfast\b",
         r"\bhungry\b", r"\beat\b", r"diet", r"nutrition",
+        r"dietary", r"snack", r"drink", r"juice",
     ]),
     ("utility_request", [
         r"\bwater\b", r"blanket", r"charger", r"housekeeping", r"wheelchair",
-        r"cleaning", r"room service", r"bathroom",
+        r"cleaning", r"room service", r"bathroom", r"pillow", r"bed",
+        r"maintenance", r"repair", r"broken", r"light",
     ]),
-    ("doctor_query", [r"\bdoctor\b", r"physician", r"specialist", r"consultation"]),
+    ("doctor_query", [
+        r"\bdoctor\b", r"physician", r"specialist", r"consultation",
+        r"\bdr\b", r"\bdr\.\b",
+    ]),
     ("status_query", [
         r"how am i", r"my status", r"my condition", r"test results",
-        r"lab report", r"when can i go home",
+        r"lab report", r"when can i go home", r"discharge", r"diagnosis",
+        r"what is wrong", r"my results",
     ]),
 ]
 

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 OPENROUTER_KEY = os.getenv("OPENROUTER_API_KEY", "")
 OPENROUTER_MODEL = os.getenv(
     "OPENROUTER_MODEL",
-    "nvidia/llama-3.1-nemotron-ultra-253b-v1:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
 )
 
 

@@ -215,16 +215,16 @@ class CareMateSpeech:
         ]
 
         for lang_code, speaker in attempts:
-            filename = f"resp_{uuid.uuid4()}.mp3"
+            filename = f"resp_{uuid.uuid4()}.opus"
             file_path = os.path.join(self.audio_output_dir, filename)
 
             payload = {
                 "text": text,
                 "target_language_code": lang_code,
                 "model": "bulbul:v3",
-                "pace": 1.15,  # Slightly faster pace for quicker delivery
-                "speech_sample_rate": 22050,
-                "output_audio_codec": "mp3",
+                "pace": 0.85,  # Slightly faster pace for quicker delivery
+                "speech_sample_rate": 24000,
+                "output_audio_codec": "opus",
                 "enable_preprocessing": True,
             }
             if speaker:

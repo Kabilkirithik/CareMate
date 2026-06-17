@@ -1,3 +1,0 @@
-import os
-
-print("GEMINI_API_KEY =", os.getenv("GEMINI_API_KEY"))
