@@ -4,7 +4,7 @@ import { EmergencyAlert } from "@/components/dashboard/EmergencyAlert";
 import { VoiceWave } from "@/components/dashboard/VoiceWave";
 import { StaffAssignment } from "@/components/dashboard/StaffAssignment";
 import { Mic, MicOff, Sparkles, User, Pill, FileText, Activity, ChevronDown, ChevronUp } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { websocket } from "@/lib/websocket";
@@ -13,6 +13,29 @@ export const Route = createFileRoute("/doctor")({
   head: () => ({ meta: [{ title: "Doctor · CareMate" }] }),
   component: DoctorDashboard,
 });
+
+/** Generates a repeating alarm beep using the Web Audio API — no external file needed */
+function playAlarm(times = 4) {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    let offset = 0;
+    for (let i = 0; i < times; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = "square";
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.6, ctx.currentTime + offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + offset + 0.3);
+      osc.start(ctx.currentTime + offset);
+      osc.stop(ctx.currentTime + offset + 0.35);
+      offset += 0.45;
+    }
+  } catch {
+    // AudioContext not available — silently skip
+  }
+}
 
 function DoctorDashboard() {
   const [queue, setQueue] = useState<any[]>([]);
@@ -134,6 +157,8 @@ function DoctorDashboard() {
       if (msg.type === "EMERGENCY_ALERT") {
         setEmergency({ room: payload.room ?? payload.room_id, patient: payload.patient_id, reason: payload.message });
         toast.error("EMERGENCY DETECTED", { description: payload.message });
+        // 🚨 Play alarm sound
+        playAlarm();
       }
       refreshQueue();
     });

@@ -310,46 +310,28 @@ async def voice_endpoint(req: Request, patient_id: str, file: UploadFile = File(
         p_name = patient_name or (lookup.get("name") if lookup else "Unknown")
         room_id = lookup.get("room_id") if lookup else "N/A"
 
-        # Save uploaded file with validation
         content = await file.read()
         logger.info(f"Audio file size: {len(content)} bytes")
         
         if len(content) == 0:
             raise HTTPException(status_code=400, detail="Empty audio file")
         
-        with open(temp_path, "wb") as buffer: 
+        with open(temp_path, "wb") as buffer:
             buffer.write(content)
         
         logger.info("Starting voice processing...")
-        
-        # Get intent early for targeted notification (we'll classify after STT)
-        # For now, send processing notification to all assigned staff
-        # We'll send the final notification with proper targeting after intent classification
-        
-        # OPTIMIZATION 2: Process with timeout handling
+
         try:
-            # Use asyncio.wait_for to add timeout protection
             result = await asyncio.wait_for(
                 asyncio.get_event_loop().run_in_executor(
                     None, backend.process_voice_input, temp_path, patient_id
                 ),
-                timeout=60.0  # 60 second timeout
+                timeout=90.0
             )
         except asyncio.TimeoutError:
-            logger.error("Voice processing timed out after 60 seconds")
-            # Send quick fallback response
-            fallback_response = "I received your message and am processing it. Please wait a moment for a detailed response."
+            logger.error("Voice processing timed out")
+            fallback_response = "I received your message. Please wait a moment for a response."
             audio_path = backend.speech.tts(fallback_response)
-            
-            # Send timeout notification to assigned staff only
-            await manager.send_to_assigned_staff(_ws_payload("PROCESSING_TIMEOUT", {
-                "patient_id": patient_id,
-                "patient_name": p_name,
-                "room": room_id,
-                "message": "Processing timeout - sending quick response",
-                "status": "timeout"
-            }), patient_id, "general_conversation")
-            
             return ChatResponse(
                 session_id=str(uuid.uuid4()),
                 transcript="[Voice message received]",
@@ -358,18 +340,12 @@ async def voice_endpoint(req: Request, patient_id: str, file: UploadFile = File(
                 intent="general_conversation"
             )
         
-        logger.info(f"Voice processing result: {result}")
-        
-        if "error" in result: 
-            logger.error(f"Voice processing error: {result['error']}")
+        if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
-        
-        # Use intent from the processing pipeline (already classified inside process_input)
-        # Fall back to re-classifying the transcript only if not provided
+
         intent = result.get("intent") or backend.router.classify(result.get("transcript", ""))["intent"]
         
         logger.info(f"Intent: {intent}")
-        logger.info("Logging interaction...")
         _log_interaction(
             patient_id, p_name, room_id,
             type="VOICE",
@@ -378,13 +354,7 @@ async def voice_endpoint(req: Request, patient_id: str, file: UploadFile = File(
             message=result.get("transcript", ""),
             response_text=result.get("response_text", ""),
         )
-        _log_interaction(
-            patient_id, p_name, room_id,
-            type="VOICE", transcript=result["transcript"], intent=intent,
-        )
 
-        logger.info("Sending targeted WebSocket notification...")
-        # Send to assigned staff based on intent (emergencies go to all doctors)
         await manager.send_to_assigned_staff(_ws_payload(
             "EMERGENCY_ALERT" if intent == "emergency" else "NEW_REQUEST",
             {
@@ -392,12 +362,11 @@ async def voice_endpoint(req: Request, patient_id: str, file: UploadFile = File(
                 "patient_name": p_name,
                 "room": room_id,
                 "intent": intent,
-                "message": result["transcript"],
+                "message": result.get("transcript", ""),
                 "status": "completed"
             },
         ), patient_id, intent)
 
-        logger.info("Generating audio URL...")
         audio_url = _audio_public_url(req, result.get("response_audio"))
         
         # Stream audio to ESP32 if enabled

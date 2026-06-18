@@ -18,7 +18,7 @@ load_dotenv()
 class CareMateBackend:
     def __init__(self):
         logger.info("Initializing CareMate AI Backend...")
-        self.router = IntentRouter()
+        self.router = IntentRouter()  # loads SentenceTransformer once here
         self.speech = CareMateSpeech()
         
         # Database Connection
@@ -27,6 +27,14 @@ class CareMateBackend:
         
         # Thread pool for parallel processing
         self.executor = ThreadPoolExecutor(max_workers=6)
+        
+        # Pre-warm the crew router singleton so first request is fast
+        try:
+            from caremate_crew import route_intent as _warm
+            _warm("hello")
+            logger.info("CrewAI intent router pre-warmed")
+        except Exception as e:
+            logger.warning(f"Crew pre-warm skipped: {e}")
 
     async def process_voice_input_async(self, audio_file_path: str, patient_id: str):
         """Async version of voice processing with parallel execution"""
@@ -169,8 +177,20 @@ class CareMateBackend:
         # ── LAYER 3: Cache check ──
         cached = optimizer.get_cached_response(user_input, intent)
         if cached:
-            logger.info("Cache hit — skipping crew")
-            return (cached, intent)
+            # Reject cached junk responses (underscores, too short, etc.)
+            is_junk = (
+                len(cached) < 5
+                or all(c in '_ -.\n' for c in cached)
+                or cached.count('_') > 5
+            )
+            if not is_junk:
+                logger.info("Cache hit — skipping crew")
+                return (cached, intent)
+            else:
+                logger.warning(f"Stale/junk cache entry for '{user_input[:30]}' — reprocessing")
+                # Remove the bad entry
+                cache_key = optimizer._get_cache_key(user_input, intent)
+                optimizer.response_cache.pop(cache_key, None)
 
         # ── LAYER 4: CrewAI pipeline ──
         try:

@@ -39,7 +39,19 @@ _KEYWORD_RULES: list[tuple[str, list[str]]] = [
 
 
 class IntentRouter:
+    _instance = None  # singleton — load model once per process
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
+        if self._initialized:
+            return
+        self._initialized = True
+
         base_dir = os.path.dirname(os.path.abspath(__file__))
         model_path = os.path.join(base_dir, "ml_model", "caremate_sentence_transformer_svm.pkl")
         self._use_fallback = not os.path.exists(model_path)
@@ -61,6 +73,7 @@ class IntentRouter:
         self.st_model_name = model_data.get("model_name", "all-MiniLM-L6-v2")
         self.intents = model_data.get("intents", [])
         self.st_model = SentenceTransformer(self.st_model_name)
+        print("IntentRouter: SentenceTransformer loaded (singleton)")
 
     def _keyword_classify(self, text: str) -> dict:
         lower = text.lower().strip()

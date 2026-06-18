@@ -13,6 +13,29 @@ export const Route = createFileRoute("/nurse")({
   component: NurseDashboard,
 });
 
+/** Generates a repeating alarm beep using the Web Audio API — no external file needed */
+function playAlarm(times = 4) {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    let offset = 0;
+    for (let i = 0; i < times; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = "square";
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.6, ctx.currentTime + offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + offset + 0.3);
+      osc.start(ctx.currentTime + offset);
+      osc.stop(ctx.currentTime + offset + 0.35);
+      offset += 0.45;
+    }
+  } catch {
+    // AudioContext not available — silently skip
+  }
+}
+
 type Status = "new" | "in_progress" | "done";
 interface Req {
   id: string;
@@ -86,6 +109,8 @@ function NurseDashboard() {
           patient: payload.patient_id,
           reason: payload.message,
         });
+        // 🚨 Play alarm sound
+        playAlarm();
       }
       refreshNurseQueue();
     });

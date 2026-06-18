@@ -18,21 +18,26 @@ class MeditronClient:
         self.base_url = base_url.rstrip('/')
 
     def generate_response(self, prompt: str, max_tokens: int = 100, temperature: float = 0.3):
-        logger.info("Sending request to Meditron (SageMaker)...")
+        logger.info("Sending request to Meditron...")
         try:
             response = requests.post(
-                f"{self.base_url}/chat",
+                f"{self.base_url}/generate",
                 json={
-                    "message": prompt,
-                    "max_new_tokens": max_tokens,  # Reduced default from 250 to 100
-                    "temperature": temperature,   # Reduced from 0.4 to 0.3 for more focused responses
-                    "top_p": 0.7                  # Reduced from 0.8 to 0.7 for faster generation
+                    "query": prompt,
+                    "max_new_tokens": max_tokens,
                 },
-                timeout=25  # Reduced from 45 to 25 seconds
+                timeout=25,
+                headers={"ngrok-skip-browser-warning": "1"},
             )
             response.raise_for_status()
-            result = response.json()["response"]
-            logger.info(f"Meditron Raw Response: {result[:100]}...")
+            raw = response.json().get("response", "").strip()
+
+            # Strip repetition and role markers
+            import re as _re
+            raw = _re.split(r"<\|", raw)[0].strip()
+            sentences = _re.split(r"(?<=[.!?])\s+", raw)
+            result = " ".join(sentences[:2]).strip()
+            logger.info(f"Meditron Response: {result[:100]}")
             return result
 
         except requests.exceptions.Timeout:
@@ -70,7 +75,8 @@ class MeditronClient:
 
     def health_check(self):
         try:
-            r = requests.get(f"{self.base_url}/health", timeout=10)
+            r = requests.get(f"{self.base_url}/health", timeout=10,
+                             headers={"ngrok-skip-browser-warning": "1"})
             return r.status_code == 200
         except:
             return False

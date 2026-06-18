@@ -36,6 +36,14 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
+# In-memory patient context cache (TTL: 60s per patient)
+# Avoids repeated MongoDB calls within the same session
+# ---------------------------------------------------------------------------
+import time as _time
+_CONTEXT_CACHE: dict = {}  # {patient_id: (context_str, fetched_at)}
+_CONTEXT_TTL = 60  # seconds
+
+# ---------------------------------------------------------------------------
 # LLM 1: Nemotron via OpenRouter — used by Central Orchestration Agent
 #         (workflow routing, logging, summaries)
 # ---------------------------------------------------------------------------
@@ -53,28 +61,35 @@ MEDITRON_URL = os.getenv("SAGEMAKER_URL", "https://stateless-hygroscopically-tri
 
 class _MeditronLLM:
     """
-    Thin wrapper so we can call Meditron directly for general conversation
-    without going through CrewAI's LLM interface.
-    Meditron handles: casual chat, emotional support, comfort responses.
+    Thin wrapper so we can call Meditron directly for general conversation.
+    Endpoint: POST /generate  |  field: query
     """
     def generate(self, prompt: str, max_tokens: int = 80) -> str:
         try:
             import requests as _req
             r = _req.post(
-                f"{MEDITRON_URL.rstrip('/')}/chat",
+                f"{MEDITRON_URL.rstrip('/')}/generate",
                 json={
-                    "message": prompt,
+                    "query": prompt,
                     "max_new_tokens": max_tokens,
-                    "temperature": 0.3,
-                    "top_p": 0.7,
                 },
                 timeout=25,
+                headers={"ngrok-skip-browser-warning": "1"},
             )
             r.raise_for_status()
-            return r.json().get("response", "").strip()
+            raw = r.json().get("response", "").strip()
+
+            # Strip repetition — Meditron sometimes echoes itself
+            # Take only the first clean sentence before any <|assistant|> tag or repetition
+            import re as _re
+            # Remove everything after the first <| token or role marker
+            raw = _re.split(r"<\|", raw)[0].strip()
+            # Take only the first 2 sentences
+            sentences = _re.split(r"(?<=[.!?])\s+", raw)
+            return " ".join(sentences[:2]).strip()
         except Exception as e:
             logger.warning(f"Meditron unavailable ({e}) — falling back to Nemotron")
-            return ""   # empty → caller will use Nemotron fallback
+            return ""
 
 meditron = _MeditronLLM()
 
@@ -102,15 +117,21 @@ def detect_emergency(text: str) -> bool:
 # DETERMINISTIC LAYER 2: Intent Routing
 # Lightweight SVM classifier — NOT a CrewAI tool per architecture spec
 # ---------------------------------------------------------------------------
+# Pre-load the IntentRouter singleton at module import time
+# so the first request doesn't pay the SentenceTransformer loading cost
+_router_singleton = None
+
 def route_intent(text: str) -> dict:
     """
     Classify patient query intent using the trained SVM router.
-    Deterministic layer — not an agent tool.
+    Reuses the singleton IntentRouter — model loads once at startup.
     """
+    global _router_singleton
     try:
         from intent_router import IntentRouter
-        router = IntentRouter()
-        return router.classify(text)
+        if _router_singleton is None:
+            _router_singleton = IntentRouter()
+        return _router_singleton.classify(text)
     except Exception as e:
         logger.error(f"Intent routing error: {e}")
         return {"intent": "general_conversation", "confidence": 0.5}
@@ -357,8 +378,16 @@ central_orchestration_agent = Agent(
 def _fetch_patient_context(patient_id: str) -> str:
     """
     Pre-fetch patient context before the crew runs.
-    Calls the DB directly — does NOT go through the @tool wrapper.
+    Uses an in-memory cache (TTL=60s) to avoid repeated DB round-trips.
     """
+    # Check cache first
+    cached = _CONTEXT_CACHE.get(patient_id)
+    if cached:
+        context_str, fetched_at = cached
+        if _time.time() - fetched_at < _CONTEXT_TTL:
+            logger.info(f"[Context cache HIT] patient {patient_id}")
+            return context_str
+
     try:
         from pymongo import MongoClient
         db = MongoClient(os.getenv("MONGO_URI"))["caremate_db"]
@@ -415,6 +444,8 @@ def _fetch_patient_context(patient_id: str) -> str:
             f"Doctor notes: {doctor_notes}\n"
             f"Recent requests: {recent_str}"
         )
+        _CONTEXT_CACHE[patient_id] = (result, _time.time())
+        return result
     except Exception as e:
         logger.error(f"Pre-fetch patient context failed: {e}")
         return f"Patient ID: {patient_id} (context unavailable)"
@@ -445,59 +476,75 @@ def run_caremate_crew(
     patient_context = _fetch_patient_context(patient_id)
     logger.info(f"[CrewAI] Patient context loaded for {patient_id}")
 
+    # status_query = patient asking about their own records → answer directly
+    # doctor_query = patient specifically wants to speak to doctor → forward
     is_workflow = intent in [
         "nurse_request", "nutrition_request",
-        "utility_request", "doctor_query", "status_query"
+        "utility_request", "doctor_query",
+        # status_query removed — handled below with patient context
     ]
 
-    # ── FAST PATH: General conversation → Meditron directly ─────────────────
-    # Meditron is the ONLY path for general conversation.
-    # The crew is NEVER used for general_conversation — it leaks JSON reasoning.
+    # ── ROUTING ───────────────────────────────────────────────────────────────
+    # general_conversation → Meditron (Patient Agent)
+    # status_query         → Nemotron with patient context (answer directly)
+    # workflow intents     → DB log + Nemotron confirmation
+    # emergency            → immediate alert
+
     if not is_workflow and not is_emergency:
+        # ── Meditron: general conversation ──────────────────────────────────
         import re as _re
+        # Trim context to essentials for faster API call
+        ctx_lines = [l for l in patient_context.split("\n") if l.strip() and
+                     any(k in l for k in ["Name:", "Conditions:", "Allergies:", "Room:"])]
+        mini_ctx = " | ".join(ctx_lines[:3]) if ctx_lines else f"Patient: {patient_name}"
+
         meditron_prompt = (
-            f"You are CareMate, a warm hospital bedside assistant.\n"
-            f"PATIENT CONTEXT:\n{patient_context}\n\n"
-            f"The patient said: \"{patient_query}\"\n\n"
-            f"Respond in 1-2 short empathetic sentences using the patient's name. "
-            f"Do NOT give medical advice. Be warm and supportive. "
-            f"Only output the response, nothing else."
+            f"You are CareMate, a caring and gentle hospital bedside companion. "
+            f"You speak with warmth and reassurance — like a trusted friend.\n"
+            f"{mini_ctx}\n"
+            f"Patient said: \"{patient_query}\"\n"
+            f"Reply in 1-2 warm sentences using their name. No medical advice. Output only your response."
         )
         response = meditron.generate(meditron_prompt, max_tokens=80)
-
         if response and len(response) > 4:
-            # Strip echoed prompt markers
-            for marker in ["CareMate:", "Assistant:", "Response:", "CareMate response:",
-                           "You are CareMate", "PATIENT CONTEXT", "The patient said"]:
+            # Clean up any prompt echoing or role markers
+            for marker in ["You are CareMate", "PATIENT CONTEXT", "Patient said",
+                           "CareMate:", "Assistant:", "<|"]:
                 if marker in response:
-                    response = response.split(marker)[-1].strip()
-            # Take only first 2 sentences
+                    response = response.split(marker)[0].strip()
             sentences = _re.split(r'(?<=[.!?])\s+', response.strip())
-            response = " ".join(sentences[:2]).strip().strip('"').strip("'")
-            if len(response) > 4:
-                logger.info(f"[Meditron] ✓ Response: {response[:80]}")
-                return response
+            clean = " ".join(sentences[:2]).strip().strip('"').strip("'")
+            # Reject junk: only underscores/dashes/dots, or too short after cleaning
+            is_junk = (
+                len(clean) < 5
+                or all(c in '_ -.\n' for c in clean)
+                or clean.count('_') > 5
+            )
+            if not is_junk:
+                logger.info(f"[Meditron] ✓ {clean[:80]}")
+                return clean
+            logger.warning(f"[Meditron] Junk response detected: '{clean[:40]}' — skipping")
 
-        # Meditron unavailable — use Nemotron via openrouter_client as fallback
-        logger.warning("[Meditron] Unavailable — falling back to Nemotron for general chat")
+        # Meditron down → Nemotron fallback for general conversation
+        logger.warning("[Meditron] Unavailable — using Nemotron for general chat")
         try:
             from openrouter_client import generate_openrouter_response
             nemotron_prompt = (
-                f"You are CareMate, a warm hospital bedside assistant.\n"
-                f"PATIENT CONTEXT:\n{patient_context}\n\n"
-                f"Patient said: \"{patient_query}\"\n\n"
-                f"Reply in 1-2 short empathetic sentences using the patient's name. "
-                f"Do NOT give medical advice. Output only the response."
+                f"You are CareMate, a caring and gentle hospital bedside companion. "
+                f"You speak with warmth and reassurance — like a trusted friend.\n"
+                f"{mini_ctx}\n"
+                f"Patient said: \"{patient_query}\"\n"
+                f"Reply in 1-2 warm sentences using their name. No medical advice. Output only your response."
             )
-            response = generate_openrouter_response(nemotron_prompt, max_tokens=80)
-            if response and len(response) > 4:
-                import re as _re
-                sentences = _re.split(r'(?<=[.!?])\s+', response.strip())
+            resp = generate_openrouter_response(nemotron_prompt, max_tokens=80)
+            if resp and len(resp) > 4:
+                import re as _re2
+                sentences = _re2.split(r'(?<=[.!?])\s+', resp.strip())
                 return " ".join(sentences[:2]).strip()
         except Exception as e:
-            logger.error(f"Nemotron fallback also failed: {e}")
+            logger.error(f"Nemotron fallback failed: {e}")
 
-        # Last resort keyword fallback
+        # Last-resort keyword replies
         user_lower = patient_query.lower()
         if any(w in user_lower for w in ["hello", "hi", "hey"]):
             return "Hello! I'm CareMate, your hospital assistant. How can I help you today?"
@@ -505,107 +552,113 @@ def run_caremate_crew(
             return "You're very welcome! I'm always here to help you."
         if any(w in user_lower for w in ["tired", "exhausted", "sleepy"]):
             return "Rest is very important for your recovery. I hope you feel better soon."
-        if any(w in user_lower for w in ["scared", "worried", "afraid"]):
-            return "It's okay to feel that way. The medical team is taking good care of you."
-        if any(w in user_lower for w in ["bored", "boring"]):
+        if any(w in user_lower for w in ["bored"]):
             return "I understand you're feeling bored. I'm here with you — is there anything I can help with?"
-        if any(w in user_lower for w in ["pain", "hurt", "ache"]):
-            return "I'm sorry you're in pain. I'll make sure the nursing team is informed right away."
         return "I'm here to support you. Let me know if there's anything you need."
 
-    # ── TASK 1: Patient Interaction Agent ───────────────────────────────────
-    if is_workflow or is_emergency:
-        task1_desc = (
-            f"PATIENT CONTEXT (use this to personalise your response):\n"
-            f"{patient_context}\n\n"
-            f"Patient said: \"{patient_query}\"\n"
-            f"Pre-classified intent: {intent}\n\n"
-            "Acknowledge the patient warmly using their name (from context above). "
-            "Tell them their request is being forwarded to the right team. "
-            "Do NOT attempt to fulfil the request yourself. "
-            "Return only the acknowledgement sentence — address them by name."
-        )
-        task1_output = "A single warm acknowledgement sentence using the patient's name."
-    else:
-        # Casual conversation — agent has full context and responds
-        task1_desc = (
-            f"PATIENT CONTEXT (use this to personalise your response):\n"
-            f"{patient_context}\n\n"
-            f"Patient said: \"{patient_query}\"\n\n"
-            "Using the patient context above, respond with 1-2 warm, empathetic sentences "
-            "personalised to this patient (use their name, acknowledge their conditions "
-            "if relevant). Do NOT give medical advice. "
-            "Return only the patient-facing response."
-        )
-        task1_output = (
-            "1-2 warm personalised sentences using the patient's name. No medical advice."
-        )
+    # ── STATUS QUERY: Answer directly with patient context ───────────────────
+    # Patient is asking about their own medical history/report/condition.
+    # We have the context — answer it, don't forward to doctor.
+    if intent == "status_query":
+        import re as _re
+        from openrouter_client import generate_openrouter_response
+        ctx_lines = [l for l in patient_context.split("\n") if l.strip() and
+                     any(k in l for k in ["Name:", "Conditions:", "Allergies:", "Vitals:",
+                                          "Room:", "Doctor notes:", "Recent requests:"])]
+        mini_ctx = "\n".join(ctx_lines[:6]) if ctx_lines else patient_context[:400]
+        patient_name = mini_ctx.split("Name: ")[1].split("|")[0].strip() if "Name: " in mini_ctx else "there"
 
-    task_interact = Task(
-        description=task1_desc,
-        expected_output=task1_output,
-        agent=patient_interaction_agent,
-    )
+        prompt = (
+            f"You are CareMate, a caring hospital bedside assistant.\n"
+            f"PATIENT RECORDS:\n{mini_ctx}\n\n"
+            f"Patient asked: \"{patient_query}\"\n\n"
+            f"Using the records above, give {patient_name} a clear, warm summary of their relevant "
+            f"medical information. If the records don't contain the answer, say so kindly and "
+            f"suggest they ask their doctor for more details. "
+            f"Keep it to 2-3 sentences. Output only the response."
+        )
+        try:
+            response = generate_openrouter_response(prompt, max_tokens=120)
+            if response and len(response) > 4:
+                sentences = _re.split(r'(?<=[.!?])\s+', response.strip())
+                return " ".join(sentences[:3]).strip()
+        except Exception as e:
+            logger.error(f"Status query response failed: {e}")
+        # Fallback — give what we have from context
+        return f"{patient_name}, based on your records: {mini_ctx[:200]}"
 
-    # ── TASK 2: Central Orchestration Agent ─────────────────────────────────
-    tasks = [task_interact]
+    # ── WORKFLOW & EMERGENCY: Direct calls — no crew overhead ───────────────
+    # Log to DB directly, then call OpenRouter for a single fast response.
+    # Skipping CrewAI saves 10-20s of agent reasoning overhead.
+    import re as _re
+    from openrouter_client import generate_openrouter_response
+    from hospital_tools import WorkflowActionTool
 
-    if is_workflow or is_emergency:
-        if is_emergency:
-            task2_desc = (
-                f"PATIENT CONTEXT:\n{patient_context}\n\n"
-                f"EMERGENCY detected. Patient said: \"{patient_query}\"\n\n"
-                f"Use the Workflow Action Tool with patient_id='{patient_id}' "
-                "and request_type='EMERGENCY' immediately. "
-                "Return: 'EMERGENCY ALERT TRIGGERED. Help is on the way. Please stay calm.'"
+    # Extract patient name for personalisation
+    patient_name = patient_context.split("Name: ")[1].split("|")[0].strip() if "Name: " in patient_context else "there"
+
+    if is_emergency:
+        # Log immediately
+        try:
+            WorkflowActionTool()._run(
+                patient_id=patient_id,
+                request_type="EMERGENCY",
+                request_text=patient_query,
+                category="CRITICAL"
             )
-        elif intent in ["doctor_query", "status_query"]:
-            task2_desc = (
-                f"PATIENT CONTEXT:\n{patient_context}\n\n"
-                f"Intent: {intent}. Patient said: \"{patient_query}\"\n\n"
-                f"Use the Workflow Action Tool with patient_id='{patient_id}' "
-                "and request_type='doctor_query' to log this. "
-                "Using the patient's name from context, return a 1-sentence response "
-                "telling them their doctor will respond shortly. "
-                "Do NOT answer the medical question."
-            )
-        else:
-            task2_desc = (
-                f"PATIENT CONTEXT:\n{patient_context}\n\n"
-                f"Intent: {intent}. Patient said: \"{patient_query}\"\n\n"
-                f"Use the Workflow Action Tool with patient_id='{patient_id}' "
-                f"and request_type='{intent}' to log this request. "
-                "Using the patient's name from context, return a 1-sentence confirmation "
-                "that the request has been sent to the right team."
-            )
+        except Exception as e:
+            logger.error(f"Emergency log error: {e}")
+        return f"Don't worry {patient_name}, help is on the way right now. Please stay calm."
 
-        task_orchestrate = Task(
-            description=task2_desc,
-            expected_output=(
-                "A single personalised patient-facing confirmation sentence using "
-                "the patient's name. No JSON, no labels."
-            ),
-            agent=central_orchestration_agent,
-            context=[task_interact],
-        )
-        tasks.append(task_orchestrate)
-
-    # ── RUN CREW ─────────────────────────────────────────────────────────────
-    crew = Crew(
-        agents=[patient_interaction_agent, central_orchestration_agent],
-        tasks=tasks,
-        process=Process.sequential,
-        verbose=False,
-    )
-
+    # Log workflow request
+    type_map = {
+        "nurse_request":     "NURSE",
+        "doctor_query":      "DOCTOR",
+        "status_query":      "DOCTOR",
+        "nutrition_request": "NUTRITION",
+        "utility_request":   "UTILITY",
+    }
     try:
-        result = crew.kickoff(inputs={
-            "patient_query": patient_query,
-            "patient_id": patient_id,
-        })
-        response = str(result).strip()
-        logger.info(f"[CrewAI] ✓ Response ({intent}): {response[:80]}")
-        return response
+        WorkflowActionTool()._run(
+            patient_id=patient_id,
+            request_type=type_map.get(intent, intent.upper()),
+            request_text=patient_query,
+            category="general"
+        )
     except Exception as e:
-        logger.error(f"[CrewAI] Crew error: {e}")
-        return "I received your message. The care team will assist you shortly."
+        logger.error(f"Workflow log error: {e}")
+
+    # Role labels for the response
+    role_label = {
+        "nurse_request":     "nursing team",
+        "doctor_query":      "doctor",
+        "status_query":      "doctor",
+        "nutrition_request": "nutrition team",
+        "utility_request":   "care team",
+    }.get(intent, "care team")
+
+    # Call OpenRouter with a minimal prompt — smaller = faster
+    # Extract only the 2 most useful context lines to reduce payload
+    ctx_lines = [l for l in patient_context.split("\n") if l.strip() and
+                 any(k in l for k in ["Name:", "Conditions:", "Allergies:", "Room:"])]
+    mini_context = " | ".join(ctx_lines[:3]) if ctx_lines else f"Patient: {patient_name}"
+
+    prompt = (
+        f"You are CareMate, a warm hospital assistant. {mini_context}\n"
+        f"Patient said: \"{patient_query}\"\n"
+        f"The {role_label} has been notified. "
+        f"Write ONE warm caring sentence to reassure {patient_name}. Output only the sentence."
+    )
+    try:
+        response = generate_openrouter_response(prompt, max_tokens=50)
+        if response and len(response) > 4:
+            sentences = _re.split(r'(?<=[.!?])\s+', response.strip())
+            clean = " ".join(sentences[:1]).strip()
+            if len(clean) > 4:
+                logger.info(f"[Nemotron] ✓ Workflow response: {clean[:80]}")
+                return clean
+    except Exception as e:
+        logger.error(f"Nemotron workflow response failed: {e}")
+
+    # Keyword fallback
+    return f"Of course, {patient_name} — I've notified the {role_label} and they'll be with you shortly."

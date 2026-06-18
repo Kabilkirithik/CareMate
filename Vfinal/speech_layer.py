@@ -101,7 +101,7 @@ class CareMateSpeech:
             meta_prefix = native_lang_meta.split("-")[0].strip().lower()
             lang_map = {
                 "en": "en", "hi": "hi", "bn": "bn", "mr": "mr", "gu": "gu",
-                "pa": "pa", "ta": "ta", "te": "te", "kn": "kn", "ml": "ml",
+                "pa": "pa", "ta": "ta-IN", "te": "te", "kn": "kn", "ml": "ml",
                 "or": "od", "od": "od",
             }
             detected_lang = lang_map.get(meta_prefix, "en")
@@ -222,7 +222,7 @@ class CareMateSpeech:
                 "text": text,
                 "target_language_code": lang_code,
                 "model": "bulbul:v3",
-                "pace": 0.85,  # Slightly faster pace for quicker delivery
+                "pace": 0.85,
                 "speech_sample_rate": 24000,
                 "output_audio_codec": "opus",
                 "enable_preprocessing": True,
